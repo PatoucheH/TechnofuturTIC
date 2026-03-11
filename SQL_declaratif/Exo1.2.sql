@@ -1,0 +1,9 @@
+CREATE TABLE T_MAINTENANCE_MTN(
+Jour CHAR(3) PRIMARY KEY,
+Machine VARCHAR(25) NOT NULL,
+Numero INT NOT NULL UNIQUE,
+Vitesse INT, 
+Temperature INT CHECK (Temperature > 6),
+Heure TIMESTAMPEZ  NOT NULL,
+Evenement VARCHAR(100)
+);
