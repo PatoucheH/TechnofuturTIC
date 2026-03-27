@@ -29,8 +29,8 @@ public class FileManager {
 
     public static String getRandomWord(String fileName) {
         Path path = getTotalPath(fileName);
-        try{
-            List<String> allWords = Files.readAllLines(path);
+        try (Stream<String> lines = Files.lines(path)) {
+            List<String> allWords = lines.toList();
             Random random = new Random();
             int randomWordIndex = random.nextInt(allWords.size());
             return allWords.get(randomWordIndex);

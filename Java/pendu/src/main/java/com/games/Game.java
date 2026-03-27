@@ -128,9 +128,7 @@ public class Game {
                 return;
             default:
                 break;
-
         }
-
     }
 
     private static void play(Scanner sc, String word, int playerLife){
