@@ -1,0 +1,75 @@
+html, body{
+    height: 100%;
+}
+
+body{
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+body > div:first-of-type{
+    background-color: lightskyblue;
+    text-align: center;
+    align-content: center;
+    height: 150px;
+    border-radius: 10px;
+    font-size: 3rem;
+}
+
+body > div:last-of-type{
+    background-color: green;
+    text-align: center;
+    align-content: center;
+    font-size: 1.4rem;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.main div{
+    border-radius: 10px;
+    margin: 2px;
+}
+
+.main div:first-child{
+    background-color: orange;
+    margin-left: 0px;
+    flex: 1;
+    flex-shrink: 0;
+}
+
+nav{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+nav a{
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+    padding: 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+
+.article{
+    background-color: rgb(223, 106, 165);
+    padding: 25px;
+    flex: 3;
+    margin-right: 0px;
+}
+
+.article p{
+    padding: 25px 50px;
+    font-size: 1.4rem;
+}

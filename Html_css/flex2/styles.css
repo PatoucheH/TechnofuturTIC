@@ -1,0 +1,49 @@
+.main, .main2{
+    height: 300px;
+    width: 100%;
+    background-color: orange;
+    display: flex;
+}
+
+.main{
+    flex-direction: column-reverse;
+}
+
+.main p{
+    border: 1px solid black;
+    width: 100px;
+    height: 100%;
+    padding: 10px;
+    text-align: center;
+}
+.main p:first-of-type{
+    background-color: white;
+    align-self: center;
+}
+.main p:nth-of-type(2){
+    background-color: lightgray;
+    align-self: flex-end;
+}
+.main p:nth-of-type(3){
+    background-color: darkgray;
+    align-self: flex-start;
+}
+.main p:nth-of-type(4){
+    background-color: darkslategray;
+    align-self: flex-end;
+    margin-top: 0px;
+}
+
+.main2{
+    flex-direction: column-reverse;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 0px;
+}
+
+.main2 li:nth-of-type(2){
+    order: 1;
+}
+.main2 li:nth-of-type(4){
+    order: 2;
+}

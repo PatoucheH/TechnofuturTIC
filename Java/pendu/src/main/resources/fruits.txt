@@ -1,0 +1,10 @@
+pomme
+banane
+orange
+fraise
+cerise
+ananas
+mangue
+poire
+raisin
+kiwi
