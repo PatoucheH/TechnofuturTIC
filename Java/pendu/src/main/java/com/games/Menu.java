@@ -3,17 +3,17 @@ package com.games;
 import java.util.Scanner;
 
 public class Menu {
-    public static String MainMenu() {
-        return "Veuillez choisir un choix dans le menu suivant\n" +
+    public static String Main() {
+        return "\n\nVeuillez faire un choix dans le menu suivant\n" +
                 "1. Choisir une catégorie\n" +
                 "2. Ajouter une catégorie\n" +
                 "3. Supprimer une catégorie\n" +
                 "4. Editer une catégorie\n" +
                 "5. Jouer\n" +
-                "6. Quitter";
+                "6. Quitter\n";
     }
 
-    public static String whatEditMenu() {
+    public static String whatEdit() {
         return "1. Ajoutez un mot\n2. Supprimer un mot\n3. Quitter";
     }
 

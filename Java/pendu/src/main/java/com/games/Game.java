@@ -14,8 +14,8 @@ public class Game {
         System.out.println("Bienvenue dans le jeu du pendu");
         Scanner sc = new Scanner(System.in);
         while(true){
-            if(!userCategory.isEmpty()) System.out.println("Vous avez choisi la catégorie : " + userCategory);
-            int userChoice = Utils.askChoice(sc, Menu.MainMenu(), 6);
+            int userChoice = Utils.askChoice(sc, Menu.Main(), 6);
+            if(!userCategory.isEmpty()) System.out.println("catégorie actuelle : " + userCategory);
 
             switch (userChoice) {
                 case 1:
@@ -28,7 +28,7 @@ public class Game {
                     userCategory = deleteCategory(sc, userCategory);
                     break;
                 case 4:
-                    if(userCategory.isEmpty()) System.out.println("Choisissez une catégorie avant de l'éditer");
+                    if(userCategory.isEmpty()) System.out.println("Choisissez une catégorie avant de l'éditer ");
                     else editCategory(sc, userCategory);
                     break;
                 case 5:
@@ -82,7 +82,7 @@ public class Game {
     }
 
     private static void addCategory(Scanner sc){
-        System.out.println("Entrer le nom de la catégorie à ajouter");
+        System.out.print("Entrer le nom de la catégorie à ajouter : ");
         while(true){
             String userChoice =  sc.nextLine();
             if(userChoice.isEmpty() ){
@@ -97,7 +97,7 @@ public class Game {
     }
 
     private static String deleteCategory(Scanner sc, String userCategory){
-        System.out.println("Entrer le nom de la catégorie à supprimer" + FileManager.getFilesName());
+        System.out.println("Entrer le nom de la catégorie à supprimer : " + FileManager.getFilesName());
         while(true){
             String userChoice =  sc.nextLine();
             if(userChoice.isEmpty() ){
@@ -116,7 +116,7 @@ public class Game {
 
     private static void editCategory(Scanner sc, String category){
         System.out.println("Que faire dans la catégorie " + category);
-        int userChoice = Utils.askChoice(sc, Menu.whatEditMenu(), 3);
+        int userChoice = Utils.askChoice(sc, Menu.whatEdit(), 3);
         switch(userChoice){
             case 1:
                 FileManager.addWord(sc, category);
@@ -163,10 +163,10 @@ public class Game {
                     playerLife--;
                 }
                 if(playerLife <= 0){
-                    System.out.println("Perdu vous n'avez plus de vies\n");
+                    System.out.printf("Perdu vous n'avez plus de vies\nLe mot était : %s\n", word);
                     return;
                 }
-                if(new String(wordToPrint).equals(word)){
+                if(new String(wordToPrint).equals(word.toLowerCase())){
                     System.out.println("GAGNE !!!\nLe mot était " + word);
                     return;
                 }

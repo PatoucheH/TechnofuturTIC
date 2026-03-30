@@ -1,10 +1,8 @@
 package com;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,10 +15,9 @@ public class FileManager {
     public static List<String> getFilesName() {
         Path path = Paths.get("src/main/resources");
         try (Stream<Path> files = Files.list(path)) {
-            return files
-                    .filter(p -> p.toString().endsWith(".txt"))
-                    .map(p -> p.getFileName().toString().replace(".txt", ""))
-                    .collect(Collectors.toList());
+            return files.filter(p -> p.toString().endsWith(".txt"))
+                        .map(p -> p.getFileName().toString().replace(".txt", ""))
+                        .collect(Collectors.toList());
         } catch (Exception e) {
             System.out.println(e);
             return new ArrayList<>();
@@ -34,8 +31,10 @@ public class FileManager {
             Random random = new Random();
             int randomWordIndex = random.nextInt(allWords.size());
             return allWords.get(randomWordIndex);
-
-        }catch (Exception e){
+        }catch (IllegalArgumentException e) {
+            System.out.println("Le fichier est vide ");
+            return null;
+        }catch(IOException e){
             return null;
         }
     }
@@ -48,18 +47,18 @@ public class FileManager {
             List<String> allWords = Files.readAllLines(path);
             int randomWordIndex = random.nextInt(allWords.size());
             return allWords.get(randomWordIndex);
-
-        }catch (Exception e){
+        }catch (IOException e){
             return null;
         }
     }
-
 
     public static void createCategory(String fileName) {
         Path path = getTotalPath(fileName);
         try{
             Files.createFile(path);
-        }catch (Exception e){
+        }catch (FileAlreadyExistsException e){
+            System.out.println("Un fichier existe déjà avec cette catégorie");
+        }catch (IOException e){
             System.out.println(e);
         }
     }
@@ -68,7 +67,9 @@ public class FileManager {
         Path path = getTotalPath(fileName);
         try{
             Files.deleteIfExists(path);
-        }catch (Exception e){
+        }catch(DirectoryNotEmptyException e){
+            System.out.println("Dossier non vide");
+        }catch(IOException e){
             System.out.println(e);
         }
     }
@@ -81,7 +82,10 @@ public class FileManager {
             boolean isEmpty = Files.size(path) == 0;
             if (isEmpty) Files.writeString(path, userWord, Charset.defaultCharset(), StandardOpenOption.APPEND);
             else Files.writeString(path, "\n" + userWord, Charset.defaultCharset(), StandardOpenOption.APPEND);
-        }catch (Exception e){
+        }catch(UnsupportedOperationException e){
+            System.out.println("Opération pas supportée");
+        }
+        catch (IOException e){
             System.out.println(e);
         }
     }
@@ -96,7 +100,9 @@ public class FileManager {
                      .filter(word -> !word.trim().equals(userWord))
                      .collect(Collectors.toList());
              Files.write(path, words);
-        }catch (Exception e){
+        }catch(UnsupportedOperationException e) {
+            System.out.println("Opération pas supportée");
+        }catch(IOException e){
             System.out.println(e);
         }
     }

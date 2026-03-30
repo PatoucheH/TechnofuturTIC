@@ -1,0 +1,18 @@
+{
+  "name" : "Bloop",
+  "deadAnimals" : { },
+  "aliveAnimals" : {
+    "19c4653d-996e-4786-b2c5-99b1c8eb4db8" : {
+      "type" : "dog",
+      "name" : "Baloo",
+      "weight" : 30,
+      "height" : 5,
+      "gender" : "Male",
+      "year" : 5,
+      "arrivedDate" : [ 2026, 3, 30, 16, 5, 16, 833854400 ],
+      "collarColor" : "Vert",
+      "isDressed" : true,
+      "breed" : "roumain"
+    }
+  }
+}
