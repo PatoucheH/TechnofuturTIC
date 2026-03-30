@@ -7,8 +7,8 @@ public class Bird extends Animals{
     public Bird(){
         setDeadPossibility(0.03);
     }
-    public Bird(String name, int weight, int height, String gender, int year, String color, boolean liveInCage) {
-        super(name, weight, height, gender, year);
+    public Bird(String name, int weight, int height, GenderType genderType, int year, String color, boolean liveInCage) {
+        super(name, weight, height, genderType, year);
         this.setDeadPossibility(0.03);
         this.setHumanYear(year * 10);
         this.color = color;

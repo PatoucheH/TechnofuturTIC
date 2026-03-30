@@ -12,8 +12,8 @@ public class Cat extends Animals{
         setDeadPossibility(0.005);
     }
 
-    public Cat(String name, int weight, int height, String gender, int year, List<String> caracteristics, boolean longHair) {
-        super(name, weight, height, gender, year);
+    public Cat(String name, int weight, int height, GenderType genderType, int year, List<String> caracteristics, boolean longHair) {
+        super(name, weight, height, genderType, year);
         this.setDeadPossibility(0.005);
         this.setHumanYear(year * 10);
         this.caracteristics = caracteristics;

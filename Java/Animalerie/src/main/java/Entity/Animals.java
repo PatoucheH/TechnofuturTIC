@@ -21,7 +21,7 @@ public class Animals {
     public String name;
     public int weight;
     public int height;
-    public String gender;
+    public GenderType genderType;
     public int year;
     private int humanYear;
     public LocalDateTime arrivedDate;
@@ -29,12 +29,12 @@ public class Animals {
     private double deadPossibility;
 
     public Animals(){}
-    public Animals(String name, int weight, int height, String gender, int year){
+    public Animals(String name, int weight, int height, GenderType genderType, int year){
         this();
         this.name = name;
         this.weight = weight;
         this.height = height;
-        this.gender = gender;
+        this.genderType = genderType;
         this.year = year;
         this.arrivedDate = LocalDateTime.now();
     }
