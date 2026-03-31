@@ -20,17 +20,17 @@ public class Utils {
     }
 
     public static Color checkUserChoiceIsColor(Scanner sc){
-        Color color = null;
+        Color color;
         while (true) {
             System.out.println("Veuillez choisir une couleur parmi : RED, GREEN, BLUE, PURPLE, WHITE, BLACK, ORANGE");
             String userChoose = sc.nextLine().toUpperCase();
             try {
                 color = Color.valueOf(userChoose);
                 System.out.println("Vous avez choisi : " + userChoose);
+                return color;
             } catch (IllegalArgumentException e) {
                 System.out.println("Couleur invalide, réessayez.");
             }
-            return color;
         }
     }
 }

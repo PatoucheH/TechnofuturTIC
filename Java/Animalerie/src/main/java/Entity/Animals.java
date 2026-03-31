@@ -44,17 +44,17 @@ public class Animals {
     }
 
     public void setWeight(int weight){
-        if(weight < 0 || weight > 100){
+        if(weight > 0 && weight < 100){
             this.weight = weight;
         }else{
             System.out.println("La valeur pour le poids de l'animal n'est pas compris entre 0 et 100");
         }
     }
     public void setHeight(int height){
-        if(height < 0 || height > 150){
+        if(height > 0 && height < 500){
             this.height = height;
         }else{
-            System.out.println("La valeur pour le poids de l'animal n'est pas compris entre 0 et 150");
+            System.out.println("La valeur pour la taille de l'animal n'est pas compris entre 0 et 500");
         }
     }
 
