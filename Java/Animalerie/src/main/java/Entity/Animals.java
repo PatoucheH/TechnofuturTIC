@@ -32,8 +32,8 @@ public class Animals {
     public Animals(String name, int weight, int height, GenderType genderType, int year){
         this();
         this.name = name;
-        this.weight = weight;
-        this.height = height;
+        setWeight(weight);
+        setHeight(height);
         this.genderType = genderType;
         this.year = year;
         this.arrivedDate = LocalDateTime.now();
@@ -41,6 +41,21 @@ public class Animals {
 
     public void setHumanYear(int humanYear){
         this.humanYear = humanYear;
+    }
+
+    public void setWeight(int weight){
+        if(weight < 0 || weight > 100){
+            this.weight = weight;
+        }else{
+            System.out.println("La valeur pour le poids de l'animal n'est pas compris entre 0 et 100");
+        }
+    }
+    public void setHeight(int height){
+        if(height < 0 || height > 150){
+            this.height = height;
+        }else{
+            System.out.println("La valeur pour le poids de l'animal n'est pas compris entre 0 et 150");
+        }
     }
 
     public void setDeadPossibility(double deadPossibility) {

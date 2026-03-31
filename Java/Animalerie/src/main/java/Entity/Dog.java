@@ -1,7 +1,7 @@
 package Entity;
 
 public class Dog extends Animals{
-    public String collarColor;
+    public Color collarColor;
     public boolean isDressed;
     public String breed;
 
@@ -9,7 +9,7 @@ public class Dog extends Animals{
         setDeadPossibility(0.01);
     }
 
-    public Dog(String name, int weight, int height, GenderType genderType, int year, String collarColor, boolean isDressed, String breed) {
+    public Dog(String name, int weight, int height, GenderType genderType, int year, Color collarColor, boolean isDressed, String breed) {
         super(name, weight, height, genderType, year);
         this.setDeadPossibility(0.01);
         this.setHumanYear(year * 10);

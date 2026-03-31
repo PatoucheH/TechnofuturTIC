@@ -40,7 +40,7 @@ public class ManageAnimals {
     public static Dog createDog(Scanner sc){
         Animals base =  createBaseAnimal(sc);
         System.out.print("Entrez la couleur du collier du chien : ");
-        String collarColor = sc.nextLine();
+        Color collarColor = Utils.checkUserChoiceIsColor(sc);
         boolean isDressed = Utils.checkUserChoiceIsInt(sc, "Entrez si votre chien est dressé (1) ou non (2) : ", 2) == 1;
         System.out.print("Entrez la race du chien : ");
         String breed = sc.nextLine();
@@ -49,8 +49,8 @@ public class ManageAnimals {
 
     public static Bird createBird(Scanner sc){
         Animals base =  createBaseAnimal(sc);
-        System.out.print("Entrez la couleur du volatile : ");
-        String color  = sc.nextLine();
+        System.out.print("Entrez la couleur du volatile compris dans ces couelurs : ");
+        Color color  = Utils.checkUserChoiceIsColor(sc);
         boolean liveInCage = Utils.checkUserChoiceIsInt(sc, "Entrez si votre oiseau est gardé dans une cage (1) ou une volière (2) : ", 2) == 1;
         return new Bird(base.name, base.weight, base.height, base.genderType, base.year, color, liveInCage);
     }
