@@ -3,6 +3,8 @@ package com.models.enums;
 import java.util.Random;
 
 public enum Dice {
+    D3(3),
+    D4(4),
     D6(6),
     D10(10),
     D20(20),
@@ -14,7 +16,7 @@ public enum Dice {
         this.faces = faces;
     }
 
-    int roll(){
+    public int roll(){
         Random rand = new Random();
         return rand.nextInt(faces) + 1;
     }
