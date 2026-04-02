@@ -1,0 +1,20 @@
+{
+  "com.models.Human" : {
+    "name" : "Bob",
+    "maxHp" : 24,
+    "actualHp" : 11,
+    "endurance" : 22,
+    "strength" : 15,
+    "xp" : 7,
+    "level" : 1,
+    "gold" : 13,
+    "position" : {
+      "x" : 4,
+      "y" : 1
+    },
+    "items" : {
+      "LEATHER" : 2
+    },
+    "dead" : false
+  }
+}
