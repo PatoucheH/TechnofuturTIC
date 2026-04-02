@@ -44,7 +44,7 @@ public class Utils {
     public static int askAction(Scanner scanner){
         int userNombre = 0;
         while (true){
-            System.out.println("Que voulez-vous faire ?\n1. Attaquer l'enemi\n2. Fuir");
+            System.out.println("Que voulez-vous faire ?\n1. Attaquer l'enemi\n2. Utiliser une potion\n3. Fuir");
             String userChoice = scanner.nextLine();
             try {
                 userNombre = Integer.parseInt(userChoice);
@@ -86,9 +86,11 @@ public class Utils {
         System.out.println("Bourse : " + perso.getGold() + " gold");
         System.out.print("Inventaire : " );
         for(Map.Entry<ItemType, Integer> entry : perso.getItems().entrySet()){
-            System.out.print(entry.getKey() + "(" + entry.getValue() + ")");
+            System.out.print(entry.getKey() + "(" + entry.getValue() + "),");
         }
-        System.out.printf("\nHp : %d / %d, Defense : %d, Strength : %d\n", perso.getActualHp(), perso.getMaxHp(), perso.getEndurance(), perso.getStrength());
+        System.out.printf("\nHp : %d / %d, Defense : %d, Strength : %d\n",
+                perso.getActualHp(), perso.getMaxHp(), perso.getEndurance(), perso.getStrength());
+        System.out.println("Niveau : " + perso.getLevel() + "\nXp : " + perso.getXp());
         System.out.println();
     }
 

@@ -1,19 +1,21 @@
 {
   "com.models.Human" : {
     "name" : "Bob",
-    "maxHp" : 24,
-    "actualHp" : 11,
-    "endurance" : 22,
-    "strength" : 15,
-    "xp" : 7,
-    "level" : 1,
-    "gold" : 13,
+    "maxHp" : 27,
+    "actualHp" : 7,
+    "endurance" : 26,
+    "strength" : 19,
+    "xp" : 4,
+    "level" : 2,
+    "gold" : 3,
     "position" : {
-      "x" : 4,
-      "y" : 1
+      "x" : 7,
+      "y" : 0
     },
     "items" : {
-      "LEATHER" : 2
+      "LEATHER" : 5,
+      "ARMOR" : 1,
+      "POTION" : 2
     },
     "dead" : false
   }

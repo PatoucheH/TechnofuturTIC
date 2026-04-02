@@ -7,6 +7,7 @@ import com.models.*;
 import com.models.enums.ItemType;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,7 +59,6 @@ public class FileManager {
                 items.put(ItemType.valueOf(i.getKey()), i.getValue().asInt());
             });
             perso.setItems(items);
-
             return perso;
         }catch(JsonProcessingException e){
             System.out.println(e);
@@ -66,5 +66,17 @@ public class FileManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void deleteSave(String heroName){
+        Path path = Paths.get("saves/" + heroName + ".json");
+
+        try{
+            boolean deleted = Files.deleteIfExists(path);
+            if(deleted) System.out.println("Sauvegarde supprimé");
+            else System.out.println("Pas de sauvegarde supprimé");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -3,5 +3,7 @@ package com.models.enums;
 public enum ItemType {
     GOLD,
     LEATHER,
-    POTION
+    POTION,
+    SWORD,
+    ARMOR
 }

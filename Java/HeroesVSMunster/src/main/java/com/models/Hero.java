@@ -65,14 +65,22 @@ public abstract class Hero extends Charactr {
     }
 
     public void addItem(ItemType item, int nbr) {
-        for (int i = 0; i < nbr; i++) {
-            this.items.put(item, this.items.getOrDefault(item, 0) + 1);
-        }
+        if (nbr <= 0) return;
+        this.items.put(item, this.items.getOrDefault(item, 0) + nbr);
     }
 
     public void addGold(int gold) {
         if(gold > 0) {
             this.gold += gold;
+        }
+    }
+    public int removeGold(int gold){
+        if(gold > 0){
+            this.gold -= gold;
+            return getGold();
+        }else{
+            System.out.println("Doit retirer un nombre positif de gold ");
+            return 0;
         }
     }
 
@@ -97,9 +105,23 @@ public abstract class Hero extends Charactr {
         this.xp += Math.max(xp, 0);
         returnValue = "\nVous avez gagné : " + xp + " d'xp";
         if(this.xp > getLevel() * 10) {
-            addLevel();
             this.xp -= getLevel() * 10;
+            addLevel();
         }
         return returnValue;
+    }
+
+    public void usePotion() {
+        if (this.items.containsKey(ItemType.POTION)) {
+            int quantity = this.items.get(ItemType.POTION);
+            if (quantity > 1) {
+                this.items.put(ItemType.POTION, quantity - 1);
+            } else {
+                this.items.remove(ItemType.POTION);
+            }
+            int heal = Dice.D10.roll();
+            setActualHp(Math.min(getMaxHp(), getActualHp() + heal ));
+            System.out.printf("Vous avez soigné %d et avez actuellement %d points de vie\n", heal, getActualHp());
+        }
     }
 }
