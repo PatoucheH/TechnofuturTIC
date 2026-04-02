@@ -3,6 +3,7 @@ package com.models.enums;
 import java.util.Random;
 
 public enum Dice {
+    D2(2),
     D3(3),
     D4(4),
     D6(6),

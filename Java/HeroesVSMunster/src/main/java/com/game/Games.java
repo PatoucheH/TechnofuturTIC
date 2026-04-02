@@ -4,45 +4,47 @@ import com.models.*;
 import com.models.enums.Dice;
 import com.models.enums.ItemType;
 
+import java.util.List;
 import java.util.Scanner;
+
+import static com.game.Utils.*;
 
 public class Games {
 
     public static void startGame(Scanner sc) {
-        System.out.println("\n\nBienvenue dans Heroes VERSUS Monster\n\n\n ");
+        System.out.println("==========================================");
+        System.out.println("Bienvenue dans Heroes VERSUS Monster\n\n\n");
         Hero perso = createPerso(sc);
-        loopGame(sc, perso);
+        Board board = new Board(10, 10, 15);
+        gameLoop(sc, perso, board);
     }
 
     public static Hero createPerso(Scanner sc){
-        int userClass = Utils.askClass(sc);
-        String userName = Utils.askName(sc);
+        int userClass = askClass(sc);
+        String userName = askName(sc);
         Hero perso = null;
         switch (userClass){
             case 1:
                 perso = new Human(userName);
-                System.out.printf("Défense : %d \nStrength : %d \nHp : %d\n",perso.getDefense(), perso.getStrength(), perso.getHp());
                 return perso;
             case 2:
                 perso = new Dwarf(userName);
-                System.out.printf("Défense : %d \nStrength : %d \nHp : %d\n",perso.getDefense(), perso.getStrength(), perso.getHp());
                 return perso;
             default:
                 return perso;
         }
     }
 
-    public static void loopGame(Scanner sc, Hero perso){
-        Monster enemi = new Orc();
-        System.out.println("Vous rentrez dans un combat contre " + enemi.getName() + " !\n");
+    public static void loopFight(Scanner sc, Hero perso, Monster enemi){
+        System.out.println("Vous rentrez dans un combat contre " + enemi.getName() + " !\nQui possède " + enemi.getActualHp() +" points de vie\n");
         while(true){
-            int userChoice = Utils.askAction(sc);
+            int userChoice = askAction(sc);
             switch(userChoice){
                 case 1:
                     int damage = perso.attack();
                     enemi.getDamage(damage);
                     System.out.printf("\nVous infligez %d dégats à %s", damage, enemi.getName());
-                    System.out.printf("\nIl lui reste %d points de vie\n", enemi.getHp() );
+                    System.out.printf("\nIl lui reste %d points de vie sur %d\n", enemi.getActualHp(), enemi.getMaxHp());
                     break;
                 case 2 :
                     System.out.println("Vous fuyez le combat LOPETTE ! ");
@@ -52,22 +54,47 @@ public class Games {
             }
             if(enemi.isDead()){
                 System.out.println("Vous avez gagné le combat BG BG");
-                Item loot = enemi.getLoot();
-                int nbr = Dice.D6.roll();
+                List<Item> loot = enemi.getLoot();
+                int nbr = 0;
                 System.out.println(perso.addXp(enemi.getXpGiven()));
-                if(loot.getName() == ItemType.GOLD){
-                    perso.addGold(nbr);
-                }else{
-                    perso.addItem(loot);
+                for (int i = 0; i < loot.size(); i++) {
+                    if(loot.get(i).getName() == ItemType.GOLD){
+                        nbr = Dice.D6.roll();
+                        perso.addGold(nbr);
+                    }else{
+                        nbr = Dice.D4.roll();
+                        perso.addItem(loot.get(i), nbr);
+                    }
+                System.out.printf("\nVous looté %d %s\n", nbr, loot.get(i).getName());
                 }
-                System.out.printf("\nVous looté %d %s", nbr, loot.getName());
-                return;
+                break;
             }
             int enemiDamage = enemi.attack();
             perso.getDamage(enemiDamage);
-            System.out.printf("\n%s vous a infligé %d dégats\nIl vous en reste %d\n", enemi.getName(), enemiDamage, perso.getHp());
+            System.out.printf("\n%s vous a infligé %d dégats\nIl vous en reste %d / %d\n", enemi.getName(), enemiDamage, perso.getActualHp(), perso.getMaxHp());
             if(perso.isDead()){
                 System.out.println("Vous avez perdu le combat NOOBY!");
+                return;
+            }
+        }
+        System.out.println("Appuyer sur une touche pour continuer....");
+        sc.nextLine();
+    }
+
+    public static void gameLoop(Scanner sc, Hero perso, Board board) {
+        while (true) {
+            System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            board.display();
+            displayPersoData(perso);
+            char input = askMove(sc);
+            Monster monster = board.movePlayer(input);
+            if (monster != null) {
+                System.out.println("Un " + monster.getName() + " apparaît !");
+                loopFight(sc, perso, monster);
+            }
+            if (perso.isDead()) {
+                System.out.println("Game Over !");
+                System.out.println("Relancer le logiciel pour créer une nouvelle partie");
                 return;
             }
         }

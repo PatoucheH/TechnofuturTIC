@@ -2,20 +2,20 @@ package com.models;
 
 import com.models.enums.Dice;
 
-import java.util.HashMap;
+import java.util.*;
 
-public abstract class Hero extends Character {
+public abstract class Hero extends Charactr {
     private int xp;
     private int level;
     private int gold;
     private HashMap<Item, Integer> items;
 
     public Hero() {}
-    public Hero(String name, int gold, int hp, int defense, int strength) {
-        super(name, hp, defense, strength );
+    public Hero(String name, int gold, int hp, int endurance, int strength) {
+        super(name, hp, endurance, strength );
         setGold(gold);
         this.xp = 0;
-        this.level = 0;
+        this.level = 1;
         this.items = new HashMap<>();
     }
 
@@ -36,8 +36,10 @@ public abstract class Hero extends Character {
         this.gold = Math.max(gold, 0);
     }
 
-    public void addItem(Item item) {
-        this.items.put(item, this.items.getOrDefault(item, 0) + 1);
+    public void addItem(Item item, int nbr) {
+        for (int i = 0; i < nbr; i++) {
+            this.items.put(item, this.items.getOrDefault(item, 0) + 1);
+        }
     }
 
     public void addGold(int gold) {
@@ -49,26 +51,26 @@ public abstract class Hero extends Character {
     public void gainStat(){
         int hpWin = Dice.D20.roll();
         int strengthWin = Dice.D4.roll();
-        int defenseWin = Dice.D4.roll();
-        this.setHp(this.getHp() + hpWin);
+        int enduranceWin = Dice.D4.roll();
+        this.setMaxHp(this.getMaxHp() + hpWin);
         this.setStrength(this.getStrength() + strengthWin);
-        this.setDefense(this.getDefense() + defenseWin);
-        System.out.printf("\nVous avez gagné %d hp, %d de force et %d de defense", hpWin, strengthWin, defenseWin);
+        this.setEndurance(this.getEndurance() + enduranceWin);
+        System.out.printf("\nVous avez gagné %d hp, %d de force et %d d'endurance", hpWin, strengthWin, enduranceWin);
     }
 
     private void addLevel(){
-        this.level++;
+        System.out.println("Vous êtes monté au niveau : " +  ++this.level);
         gainStat();
+        setActualHp(getMaxHp());
     }
 
     public String addXp(int xp) {
         String returnValue =  "";
         this.xp += Math.max(xp, 0);
-        returnValue = "Vous avez gagné : " +  getXp() + "d'xp";
-        if(this.xp > getLevel() * 100) {
+        returnValue = "\nVous avez gagné : " + xp + " d'xp";
+        if(this.xp > getLevel() * 10) {
             addLevel();
-            this.xp -= getLevel() * 100;
-            returnValue = "Vous êtes monté au niveau : " + getLevel();
+            this.xp -= getLevel() * 10;
         }
         return returnValue;
     }

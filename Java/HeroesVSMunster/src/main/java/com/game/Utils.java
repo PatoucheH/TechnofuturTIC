@@ -1,5 +1,8 @@
 package com.game;
 
+import com.models.*;
+
+import java.util.Map;
 import java.util.Scanner;
 
 public class Utils {
@@ -47,5 +50,38 @@ public class Utils {
                 System.out.println("Erreur : Ce n'est pas un nombre entier valide.");
             }
         }
+    }
+
+    public static char askMove(Scanner sc) {
+        while (true) {
+            System.out.print("ZQSD pour bouger : ");
+            String input = sc.nextLine().trim().toLowerCase();
+            if (input.length() == 1) {
+                char c = input.charAt(0);
+                if (c == 'z' || c == 'q' || c == 's' || c == 'd') {
+                    return c;
+                }
+            }
+            System.out.println("Entrée invalide ! Utilise uniquement Z Q S D");
+        }
+    }
+
+    public static Monster randomMonster() {
+        int rand = (int)(Math.random() * 2);
+        switch (rand) {
+            case 0: return new Orc();
+            case 1: return new Drake();
+            default: return new Orc();
+        }
+    }
+
+    public static void displayPersoData(Hero perso){
+        System.out.println("Bourse : " + perso.getGold() + " gold");
+        System.out.print("Inventaire : " );
+        for(Map.Entry<Item, Integer> entry : perso.getItems().entrySet()){
+            System.out.print(entry.getKey().getName() + "(" + entry.getValue() + ")");
+        }
+        System.out.printf("\nHp : %d / %d, Defense : %d, Strength : %d\n", perso.getActualHp(), perso.getMaxHp(), perso.getEndurance(), perso.getStrength());
+        System.out.println();
     }
 }
