@@ -13,8 +13,8 @@ public class Gobelins extends Monster{
     public Gobelins() {
         int endurance = setStat();
         int hp;
-        List<Item> lootToAdd = new ArrayList<>();
-        lootToAdd.add(new Item(ItemType.GOLD, 1));
+        List<ItemType> lootToAdd = new ArrayList<>();
+        lootToAdd.add(ItemType.GOLD);
         if(endurance < 5) hp = endurance -1;
         else if(endurance < 10) hp = endurance ;
         else if(endurance < 15) hp = endurance + 1;

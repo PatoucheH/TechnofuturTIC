@@ -12,9 +12,9 @@ public class Drake extends Monster{
     public Drake(){
         int endurance = setStat();
         int hp;
-        List<Item> lootToAdd = new ArrayList<>();
-        lootToAdd.add(new Item(ItemType.GOLD, 1));
-        lootToAdd.add(new Item(ItemType.LEATHER, 3));
+        List<ItemType> lootToAdd = new ArrayList<>();
+        lootToAdd.add(ItemType.GOLD);
+        lootToAdd.add(ItemType.LEATHER);
         if(endurance < 5) hp = endurance -1;
         else if(endurance < 10) hp = endurance ;
         else if(endurance < 15) hp = endurance + 1;

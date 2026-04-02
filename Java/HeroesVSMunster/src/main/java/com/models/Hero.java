@@ -1,22 +1,35 @@
 package com.models;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.models.enums.Dice;
+import com.models.enums.ItemType;
 
 import java.util.*;
 
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.CLASS,
+        include = JsonTypeInfo.As.WRAPPER_OBJECT
+)
 public abstract class Hero extends Charactr {
     private int xp;
     private int level;
     private int gold;
-    private HashMap<Item, Integer> items;
+    private Position position;
+    private HashMap<ItemType, Integer> items;
 
     public Hero() {}
-    public Hero(String name, int gold, int hp, int endurance, int strength) {
+    public Hero(String name, int gold, int endurance, int strength) {
+        int hp;
+        if(endurance < 5) hp = endurance -1;
+        else if(endurance < 10) hp = endurance;
+        else if(endurance < 15) hp = endurance + 1;
+        else hp = endurance + 2;
         super(name, hp, endurance, strength );
         setGold(gold);
-        this.xp = 0;
-        this.level = 1;
-        this.items = new HashMap<>();
+        setXp(0);
+        setLevel(1);
+        setItems(new HashMap<>());
+        setPosition( new Position(0, 0));
     }
 
     public int getXp() {
@@ -28,15 +41,30 @@ public abstract class Hero extends Charactr {
     public int getGold() {
         return gold;
     }
-    public HashMap<Item, Integer> getItems() {
+    public HashMap<ItemType, Integer> getItems() {
         return items;
+    }
+    public Position getPosition() {
+        return position;
     }
 
     public void setGold(int gold) {
         this.gold = Math.max(gold, 0);
     }
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+    public void setXp(int xp){
+        this.xp = xp;
+    }
+    public void setLevel(int level){
+        this.level = level;
+    }
+    public void setItems(HashMap<ItemType, Integer> items){
+        this.items = items;
+    }
 
-    public void addItem(Item item, int nbr) {
+    public void addItem(ItemType item, int nbr) {
         for (int i = 0; i < nbr; i++) {
             this.items.put(item, this.items.getOrDefault(item, 0) + 1);
         }

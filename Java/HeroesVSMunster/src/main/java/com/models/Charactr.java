@@ -17,7 +17,7 @@ public abstract class Charactr implements Fighter {
 
     public Charactr(){}
     public Charactr(String name, int hp, int endurance, int strength) {
-        this.name = name;
+        setName(name);
         setMaxHp(hp);;
         setActualHp(hp);
         setEndurance(endurance);
@@ -40,33 +40,36 @@ public abstract class Charactr implements Fighter {
         return strength;
     }
 
-    protected void setMaxHp(int maxHp) {
+    public void setMaxHp(int maxHp) {
         if(maxHp <= 0){
             maxHp = 0;
         }else{
             this.maxHp = maxHp;
         }
     }
-    protected void setActualHp(int actualHp) {
+    public void setActualHp(int actualHp) {
         if(actualHp <= 0){
             actualHp = 0;
         }else{
             this.actualHp = actualHp;
         }
     }
-    protected void setEndurance(int defense) {
+    public void setEndurance(int defense) {
         if(defense <= 0){
             defense = 0;
         }else{
             this.endurance = defense;
         }
     }
-    protected void setStrength(int strength) {
+    public void setStrength(int strength) {
         if(strength <= 0){
             strength = 0;
         }else{
             this.strength = strength;
         }
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     public static int setStat(){

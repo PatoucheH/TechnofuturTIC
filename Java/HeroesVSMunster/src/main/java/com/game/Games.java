@@ -1,5 +1,6 @@
 package com.game;
 
+import com.file.FileManager;
 import com.models.*;
 import com.models.enums.Dice;
 import com.models.enums.ItemType;
@@ -7,15 +8,24 @@ import com.models.enums.ItemType;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.file.FileManager.getPerso;
 import static com.game.Utils.*;
 
 public class Games {
 
     public static void startGame(Scanner sc) {
-        System.out.println("==========================================");
+        System.out.println("==============================================");
         System.out.println("Bienvenue dans Heroes VERSUS Monster\n\n\n");
-        Hero perso = createPerso(sc);
-        Board board = new Board(10, 10, 15);
+        int userChoice = askSaveOrNew(sc);
+        Hero perso;
+        if(userChoice == 1){
+            List<String> listSave = FileManager.getFilesName();
+            int choiceSave = selectUserSave(sc, listSave);
+            perso = getPerso(listSave.get(choiceSave));
+        }else{
+            perso = createPerso(sc);
+        }
+        Board board = new Board(10, 10, 15, perso);
         gameLoop(sc, perso, board);
     }
 
@@ -36,7 +46,8 @@ public class Games {
     }
 
     public static void loopFight(Scanner sc, Hero perso, Monster enemi){
-        System.out.println("Vous rentrez dans un combat contre " + enemi.getName() + " !\nQui possède " + enemi.getActualHp() +" points de vie\n");
+        System.out.println("Vous rentrez dans un combat contre " + enemi.getName() +
+                "\nQui possède " + enemi.getActualHp() + " points de vie\n");
         while(true){
             int userChoice = askAction(sc);
             switch(userChoice){
@@ -44,7 +55,8 @@ public class Games {
                     int damage = perso.attack();
                     enemi.getDamage(damage);
                     System.out.printf("\nVous infligez %d dégats à %s", damage, enemi.getName());
-                    System.out.printf("\nIl lui reste %d points de vie sur %d\n", enemi.getActualHp(), enemi.getMaxHp());
+                    System.out.printf("\nIl lui reste %d points de vie sur %d\n",
+                            (Math.max(enemi.getActualHp(), 0)), enemi.getMaxHp());
                     break;
                 case 2 :
                     System.out.println("Vous fuyez le combat LOPETTE ! ");
@@ -54,24 +66,25 @@ public class Games {
             }
             if(enemi.isDead()){
                 System.out.println("Vous avez gagné le combat BG BG");
-                List<Item> loot = enemi.getLoot();
+                List<ItemType> loot = enemi.getLoot();
                 int nbr = 0;
                 System.out.println(perso.addXp(enemi.getXpGiven()));
-                for (int i = 0; i < loot.size(); i++) {
-                    if(loot.get(i).getName() == ItemType.GOLD){
+                for (ItemType itemType : loot) {
+                    if (itemType == ItemType.GOLD) {
                         nbr = Dice.D6.roll();
                         perso.addGold(nbr);
-                    }else{
+                    } else {
                         nbr = Dice.D4.roll();
-                        perso.addItem(loot.get(i), nbr);
+                        perso.addItem(itemType, nbr);
                     }
-                System.out.printf("\nVous looté %d %s\n", nbr, loot.get(i).getName());
+                    System.out.printf("\nVous looté %d %s\n", nbr, itemType);
                 }
                 break;
             }
             int enemiDamage = enemi.attack();
             perso.getDamage(enemiDamage);
-            System.out.printf("\n%s vous a infligé %d dégats\nIl vous en reste %d / %d\n", enemi.getName(), enemiDamage, perso.getActualHp(), perso.getMaxHp());
+            System.out.printf("\n%s vous a infligé %d dégats\nIl vous en reste %d / %d\n",
+                    enemi.getName(), enemiDamage, perso.getActualHp(), perso.getMaxHp());
             if(perso.isDead()){
                 System.out.println("Vous avez perdu le combat NOOBY!");
                 return;
@@ -87,6 +100,10 @@ public class Games {
             board.display();
             displayPersoData(perso);
             char input = askMove(sc);
+            if(input == 'e'){
+                save(perso);
+                return;
+            }
             Monster monster = board.movePlayer(input);
             if (monster != null) {
                 System.out.println("Un " + monster.getName() + " apparaît !");
