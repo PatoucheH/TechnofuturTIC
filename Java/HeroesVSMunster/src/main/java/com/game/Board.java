@@ -49,7 +49,7 @@ public class Board {
     }
 
     private void generateSeller(){
-        List<ItemType> items = List.of(POTION, SWORD, ARMOR);
+        List<ItemType> items = List.of(POTION, SWORD, ARMOR, HELMET);
         Random rand = new Random();
         int x, y;
         do {

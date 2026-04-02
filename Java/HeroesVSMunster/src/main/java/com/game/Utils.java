@@ -61,11 +61,11 @@ public class Utils {
 
     public static char askMove(Scanner sc) {
         while (true) {
-            System.out.print("ZQSD pour bouger ou E pour sauvegarder : ");
+            System.out.print("ZQSD pour bouger I pour ouvrir l'equipement et E pour sauvegarder : ");
             String input = sc.nextLine().trim().toLowerCase();
             if (input.length() == 1) {
                 char c = input.charAt(0);
-                if (c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 'e') {
+                if (c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 'e' || c == 'i') {
                     return c;
                 }
             }
@@ -140,5 +140,10 @@ public class Utils {
                 System.out.println("Erreur : Ce n'est pas un nombre entier valide");
             }
         }
+    }
+
+    public static void selectActionInInventory(Scanner sc, Hero perso){
+        System.out.println("Quel equipement voulez-vous équiper ? ");
+        perso.addEquipment(sc);
     }
 }

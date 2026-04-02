@@ -5,5 +5,6 @@ public enum ItemType {
     LEATHER,
     POTION,
     SWORD,
-    ARMOR
+    ARMOR,
+    HELMET
 }

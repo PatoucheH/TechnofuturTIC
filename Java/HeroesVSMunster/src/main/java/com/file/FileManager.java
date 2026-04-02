@@ -20,12 +20,16 @@ public class FileManager {
     public static List<String> getFilesName() {
         Path path = Paths.get("saves");
         try (Stream<Path> files = Files.list(path)) {
-            return files.filter(p -> p.toString().endsWith(".json"))
+            List<String> filesList =  files.filter(p -> p.toString().endsWith(".json"))
                     .map(p -> p.getFileName().toString().replace(".json", ""))
-                    .collect(Collectors.toList());
+                    .toList();
+            if (filesList.isEmpty()) {
+                return new ArrayList<>();
+            }
+            return filesList;
         } catch (Exception e) {
             System.out.println(e);
-            return new ArrayList<>();
+            return null;
         }
     }
 
@@ -59,6 +63,21 @@ public class FileManager {
                 items.put(ItemType.valueOf(i.getKey()), i.getValue().asInt());
             });
             perso.setItems(items);
+            HashMap<String, ItemType> equipment = new HashMap<>();
+            data.get("equipment").fields().forEachRemaining(i -> {
+                String value = i.getValue().asText();
+                if (value != null && !value.equals("null") && !value.isEmpty()) {
+                    try {
+                        equipment.put(
+                                i.getKey(),
+                                ItemType.valueOf(value.toUpperCase())
+                        );
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Valeur invalide pour ItemType : " + value);
+                    }
+                } else System.out.println("Valeur null pour la clé : " + i.getKey());
+            });
+            perso.setEquipment(equipment);
             return perso;
         }catch(JsonProcessingException e){
             System.out.println(e);

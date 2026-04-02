@@ -22,6 +22,7 @@ public class Seller {
                 case POTION -> cost = 3;
                 case SWORD -> cost = 10;
                 case ARMOR -> cost = 15;
+                case HELMET -> cost = 8;
             }
             this.items.put(item, cost);
         }

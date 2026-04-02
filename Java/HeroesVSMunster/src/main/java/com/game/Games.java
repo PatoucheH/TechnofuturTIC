@@ -19,10 +19,15 @@ public class Games {
         System.out.println("Bienvenue dans Heroes VERSUS Monster\n\n\n");
         int userChoice = askSaveOrNew(sc);
         Hero perso;
+        List<String> listSave = FileManager.getFilesName();
         if(userChoice == 1){
-            List<String> listSave = FileManager.getFilesName();
-            int choiceSave = selectUserSave(sc, listSave);
-            perso = getPerso(listSave.get(choiceSave));
+            if (listSave == null || listSave.isEmpty()) {
+                System.out.println("Aucune sauvegarde, veuillez créer un personnage");
+                perso = createPerso(sc);
+            } else {
+                int choiceSave = selectUserSave(sc, listSave);
+                perso = getPerso(listSave.get(choiceSave));
+            }
         }else{
             perso = createPerso(sc);
         }
@@ -108,15 +113,17 @@ public class Games {
                 save(perso);
                 return;
             }
+            if(input == 'i'){
+                perso.openEquipment();
+                selectActionInInventory(sc, perso);
+            }
             Monster monster = board.movePlayer(input);
-
             if (monster != null) {
                 System.out.println("Un " + monster.getName() + " apparaît !");
                 loopFight(sc, perso, monster);
             }
             if(perso.getPosition().equals(board.getPositionSeller())) {
                 System.out.println("Vous entrez chez le marchand");
-                // Implémenter menu de vente
                 board.getSeller().sellItem(sc, perso);
             }
             if (perso.isDead()) {
