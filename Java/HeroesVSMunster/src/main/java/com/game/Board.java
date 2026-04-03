@@ -1,9 +1,6 @@
 package com.game;
 
-import com.models.Hero;
-import com.models.Monster;
-import com.models.Position;
-import com.models.Seller;
+import com.models.*;
 import com.models.enums.ItemType;
 
 import java.util.List;
@@ -26,6 +23,7 @@ public class Board {
         this.perso = perso;
         generateMonsters(nbrMonsters);
         generateSeller();
+        generateBoss();
     }
 
     public Position getPositionSeller(){
@@ -44,8 +42,20 @@ public class Board {
                 x = rand.nextInt(width);
                 y = rand.nextInt(height);
             } while (monsters[y][x] != null || (perso.getPosition().x() == x && perso.getPosition().y() == y));
-            monsters[y][x] = Utils.randomMonster();
+            monsters[y][x] = Utils.randomMonster(false, perso.getLevel());
         }
+    }
+
+    private void generateBoss(){
+        Random rand = new Random();
+        int x, y;
+        do {
+            x = rand.nextInt(width - 3,width);
+            y = rand.nextInt(height - 3, height);
+        }while(monsters[y][x] != null ||
+                (perso.getPosition().x() == x && perso.getPosition().y() == y) ||
+                (getPositionSeller().x() == x && getPositionSeller().y() == y));
+        monsters[y][x] = Utils.randomMonster(true, perso.getLevel());
     }
 
     private void generateSeller(){
@@ -64,15 +74,34 @@ public class Board {
         System.out.println("=================== MAP ===================");
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
+                String result = "";
                 if (i == perso.getPosition().y() && j == perso.getPosition().x()) {
-                    System.out.print(" 🧙 ");
-                }else if (monsters[i][j] != null) {
-                    System.out.print(" 👹 ");
+                    result = " 🧙 ";
+                } else if (monsters[i][j] != null && monsters[i][j] instanceof Orc) {
+                    if(monsters[i][j].isBoss()){
+                        result = " 🧌❗";
+                    }else{
+                        result = " 🧌 ";
+                    }
+                } else if (monsters[i][j] != null && monsters[i][j] instanceof Drake) {
+                    if(monsters[i][j].isBoss()){
+                        result = " 🐉❗";
+                    }else{
+                        result = " 🐉 ";
+                    }
+                }else if (monsters[i][j] != null && monsters[i][j] instanceof Gobelins) {
+                    if(monsters[i][j].isBoss()){
+                        result = " 👹❗";
+                    }else{
+                        result = " 👹 ";
+                    }
                 }else if(i == seller.getPosition().y() && j == seller.getPosition().x()) {
-                    System.out.print(" 🛒 ");
-                }                else {
-                    System.out.print(" ⬛ ");
+                    result = " 🛒 " ;
+                }else {
+                    result =  " ⬛ ";
                 }
+
+                System.out.print(result);
             }
             System.out.println();
         }

@@ -9,7 +9,8 @@ import static com.models.enums.Dice.*;
 
 public class Orc extends Monster{
 
-    public Orc(){
+    public Orc() {}
+    public Orc(Boolean isBoss, int persoLevel){
         int endurance = setStat();
         int hp;
         List<ItemType> lootToAdd = new ArrayList<>();
@@ -18,6 +19,6 @@ public class Orc extends Monster{
         else if(endurance < 10) hp = endurance ;
         else if(endurance < 15) hp = endurance + 1;
         else hp = endurance + 2;
-        super("moyenement méchant orc", hp, endurance, setStat(), lootToAdd, D10.roll());
+        super("moyenement méchant orc", hp, endurance, setStat(), lootToAdd, D10.roll(), isBoss, persoLevel);
     }
 }

@@ -9,7 +9,8 @@ import static com.models.enums.Dice.*;
 
 public class Drake extends Monster{
 
-    public Drake(){
+    public Drake(){}
+    public Drake(Boolean isBoss, int persoLevel){
         int endurance = setStat();
         int hp;
         List<ItemType> lootToAdd = new ArrayList<>();
@@ -19,6 +20,6 @@ public class Drake extends Monster{
         else if(endurance < 10) hp = endurance ;
         else if(endurance < 15) hp = endurance + 1;
         else hp = endurance + 2;
-        super("Grand Dragon badass", hp, endurance, setStat(), lootToAdd, D10.roll());
+        super("Grand Dragon badass", hp, endurance, setStat(), lootToAdd, D10.roll(), isBoss, persoLevel);
     }
 }

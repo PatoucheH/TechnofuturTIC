@@ -10,7 +10,8 @@ import static com.models.enums.Dice.D20;
 
 public class Gobelins extends Monster{
 
-    public Gobelins() {
+    public Gobelins(){}
+    public Gobelins(Boolean isBoss, int persoLevel) {
         int endurance = setStat();
         int hp;
         List<ItemType> lootToAdd = new ArrayList<>();
@@ -19,6 +20,6 @@ public class Gobelins extends Monster{
         else if(endurance < 10) hp = endurance ;
         else if(endurance < 15) hp = endurance + 1;
         else hp = endurance + 2;
-        super("pas trop méchant petit gobelins", hp, endurance, setStat(), lootToAdd, D10.roll());
+        super("pas trop méchant petit gobelins", hp, endurance, setStat(), lootToAdd, D10.roll(), isBoss, persoLevel);
     }
 }

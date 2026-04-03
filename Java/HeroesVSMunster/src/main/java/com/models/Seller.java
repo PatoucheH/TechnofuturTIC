@@ -19,10 +19,10 @@ public class Seller {
             int cost = 0;
             switch (item) {
                 case LEATHER -> cost = 1;
-                case POTION -> cost = 3;
-                case SWORD -> cost = 10;
-                case ARMOR -> cost = 15;
-                case HELMET -> cost = 8;
+                case POTION -> cost = 5;
+                case SWORD -> cost = 20;
+                case ARMOR -> cost = 30;
+                case HELMET -> cost = 16;
             }
             this.items.put(item, cost);
         }

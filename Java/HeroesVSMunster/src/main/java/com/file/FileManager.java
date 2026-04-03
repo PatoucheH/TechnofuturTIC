@@ -57,6 +57,7 @@ public class FileManager {
             perso.setXp(data.get("xp").asInt());
             perso.setLevel(data.get("level").asInt());
             perso.setGold(data.get("gold").asInt());
+            if(data.has("mapPassed")) perso.setMapPassed(data.get("mapPassed").asInt());
             perso.setPosition(new Position(data.get("position").get("x").asInt(), data.get("position").get("y").asInt()));
             HashMap<ItemType, Integer> items = new HashMap<>();
             data.get("items").fields().forEachRemaining(i -> {

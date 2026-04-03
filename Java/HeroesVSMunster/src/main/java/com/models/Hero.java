@@ -16,6 +16,8 @@ public abstract class Hero extends Charactr {
     private int xp;
     private int level;
     private int gold;
+    private int armor;
+    private int mapPassed;
     private Position position;
     private HashMap<ItemType, Integer> items;
     private HashMap<String, ItemType> equipment = new HashMap<>();
@@ -36,6 +38,7 @@ public abstract class Hero extends Charactr {
         equipment.put("weapon", null);
         equipment.put("helmet", null);
         equipment.put("armor", null);
+        setArmor();
     }
 
     public int getXp() {
@@ -56,6 +59,12 @@ public abstract class Hero extends Charactr {
     public HashMap<String, ItemType> getEquipment() {
         return equipment;
     }
+    public int getArmor() {
+        return armor;
+    }
+    public int getMapPassed() {
+        return mapPassed;
+    }
 
     public void setGold(int gold) {
         this.gold = Math.max(gold, 0);
@@ -75,6 +84,14 @@ public abstract class Hero extends Charactr {
     public void setEquipment(HashMap<String, ItemType> equipment){
         this.equipment = equipment;
     }
+    public void setArmor(){
+        this.armor = 0;
+        if(equipment.containsValue(ItemType.ARMOR)) this.armor += D4.roll();
+        if(equipment.containsValue(ItemType.HELMET)) this.armor += D2.roll();
+    }
+    public void setMapPassed(int mapPassed) {
+        this.mapPassed = mapPassed;
+    }
 
     public void addItem(ItemType item, int nbr) {
         if (nbr <= 0) return;
@@ -86,6 +103,7 @@ public abstract class Hero extends Charactr {
             this.gold += gold;
         }
     }
+
     public int removeGold(int gold){
         if(gold > 0){
             this.gold -= gold;
@@ -96,20 +114,20 @@ public abstract class Hero extends Charactr {
         }
     }
 
-    public void gainStat(){
+    public String  gainStat(){
         int hpWin = Dice.D20.roll();
         int strengthWin = D4.roll();
         int enduranceWin = D4.roll();
         this.setMaxHp(this.getMaxHp() + hpWin);
         this.setStrength(this.getStrength() + strengthWin);
         this.setEndurance(this.getEndurance() + enduranceWin);
-        System.out.printf("\nVous avez gagné %d hp, %d de force et %d d'endurance", hpWin, strengthWin, enduranceWin);
+        return "\nVous avez gagné " + hpWin + " hp, " + strengthWin + " de force et " + enduranceWin + " d'endurance";
     }
 
-    private void addLevel(){
-        System.out.println("Vous êtes monté au niveau : " +  ++this.level);
-        gainStat();
+    private String addLevel(){
+        String resultStat = gainStat();
         setActualHp(getMaxHp());
+        return "\nVous êtes monté au niveau : " + ++this.level +  "\n" + resultStat;
     }
 
     public String addXp(int xp) {
@@ -118,7 +136,7 @@ public abstract class Hero extends Charactr {
         returnValue = "\nVous avez gagné : " + xp + " d'xp";
         if(this.xp > getLevel() * 10) {
             this.xp -= getLevel() * 10;
-            addLevel();
+            returnValue += addLevel();
         }
         return returnValue;
     }
@@ -144,39 +162,50 @@ public abstract class Hero extends Charactr {
         }
     }
 
-
-    public void addEquipment(Scanner sc){
-        System.out.println("Votre inventaire avec les equipements mettable : ");
-        for(Map.Entry<ItemType, Integer> entry : items.entrySet()){
-            if(entry.getKey() == ItemType.SWORD || entry.getKey() == ItemType.ARMOR) {
+    public void addEquipment(Scanner sc) {
+        int itemEquipment = 0;
+        for (Map.Entry<ItemType, Integer> entry : items.entrySet()) {
+            if (entry.getKey() == ItemType.SWORD || entry.getKey() == ItemType.ARMOR
+                    || entry.getKey() == ItemType.HELMET) {
                 System.out.println(entry.getKey() + " : " + entry.getValue());
+                itemEquipment++;
             }
+        }
+        if (itemEquipment <= 0) {
+            System.out.println("Pas d'quipement dans votre inventaire");
+            sc.nextLine();
+            return;
         }
         System.out.println("Taper le nom de l'équipement à équiper ou 0 pour quitter : ");
         String userChoice = sc.nextLine();
-        if(userChoice.equals("0")) return;
-        if(userChoice.equalsIgnoreCase(ItemType.SWORD.toString())){
+        if (userChoice.equals("0")) return;
+        if (userChoice.equalsIgnoreCase(ItemType.SWORD.toString())) {
             items.remove(ItemType.SWORD);
             equipment.put("weapon", ItemType.SWORD);
             System.out.println("Vous vous équipez d'une épée");
-        }else if(userChoice.equalsIgnoreCase(ItemType.ARMOR.toString())){
+        } else if (userChoice.equalsIgnoreCase(ItemType.ARMOR.toString())) {
             items.remove(ItemType.ARMOR);
-            equipment.put("weapon", ItemType.ARMOR);
+            equipment.put("armor", ItemType.ARMOR);
             System.out.println("Vous vous équipez d'une armure");
+        } else if(userChoice.equalsIgnoreCase(ItemType.HELMET.toString())){
+            items.remove(ItemType.HELMET);
+            equipment.put("helmet", ItemType.HELMET);
+            System.out.println("Vous vous équipez d'un casque");
         }else{
             System.out.println("Pas d'équipement de ce nom");
         }
-        ;
+        setArmor();
+    }
+
+    public void openInventory(){
+        
     }
 
     @Override
     public void getDamage(int damage){
-        int armor = 0;
-        if(equipment.containsValue(ItemType.ARMOR)) armor = D6.roll();
-        if(equipment.containsValue(ItemType.HELMET)) armor = D2.roll();
-
+        setArmor();
         if(damage < 0) throw new IllegalArgumentException("Les dommages doivent être positifs");
-        setActualHp(getMaxHp() - (damage - armor));
+        setActualHp(getActualHp() - (Math.max((damage - armor), 0)));
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.models.enums.ItemType;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -44,7 +45,7 @@ public class Utils {
     public static int askAction(Scanner scanner){
         int userNombre = 0;
         while (true){
-            System.out.println("Que voulez-vous faire ?\n1. Attaquer l'enemi\n2. Utiliser une potion\n3. Fuir");
+            System.out.println("\n1. Attaquer l'enemi\n2. Utiliser une potion\n3. Fuir");
             String userChoice = scanner.nextLine();
             try {
                 userNombre = Integer.parseInt(userChoice);
@@ -73,24 +74,26 @@ public class Utils {
         }
     }
 
-    public static Monster randomMonster() {
+    public static Monster randomMonster(boolean isBoss, int persoLevel) {
         int rand = (int)(Math.random() * 3);
         return switch (rand) {
-            case 1 -> new Drake();
-            case 2 -> new Gobelins();
-            default -> new Orc();
+            case 1 -> new Drake(isBoss, persoLevel);
+            case 2 -> new Gobelins(isBoss, persoLevel);
+            default -> new Orc(isBoss, persoLevel);
         };
     }
 
     public static void displayPersoData(Hero perso){
-        System.out.println("Bourse : " + perso.getGold() + " gold");
+        System.out.println("================== STATS ==================");
+        System.out.print("Bourse : " + perso.getGold() + " gold\n");
         System.out.print("Inventaire : " );
         for(Map.Entry<ItemType, Integer> entry : perso.getItems().entrySet()){
             System.out.print(entry.getKey() + "(" + entry.getValue() + "),");
         }
-        System.out.printf("\nHp : %d / %d, Defense : %d, Strength : %d\n",
+        System.out.printf("\nHp : %d / %d\nEndurance : %d |   Strength : %d\n",
                 perso.getActualHp(), perso.getMaxHp(), perso.getEndurance(), perso.getStrength());
-        System.out.println("Niveau : " + perso.getLevel() + "\nXp : " + perso.getXp());
+        System.out.println("Niveau : " + perso.getLevel() + "     | Xp : " + perso.getXp());
+        System.out.println("===========================================");
         System.out.println();
     }
 
@@ -142,8 +145,20 @@ public class Utils {
         }
     }
 
-    public static void selectActionInInventory(Scanner sc, Hero perso){
-        System.out.println("Quel equipement voulez-vous équiper ? ");
-        perso.addEquipment(sc);
+    public static void selectActionInInventory(Scanner sc, Hero perso) {
+        while(true){
+            System.out.println("Que vouslez-vous faire ?\n1. Mettre un équipement\n2. Voir l'inventaire");
+            String userChocie = sc.nextLine();
+            if (userChocie.equals("1")) {
+                System.out.println("Quel equipement voulez-vous équiper ? ");
+                perso.addEquipment(sc);
+                return;
+            } else if (userChocie.equals("2")) {
+
+            } else {
+                System.out.println("Entrez un numéro dans le menu");
+                return;
+            }
+        }
     }
 }

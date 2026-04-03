@@ -5,6 +5,7 @@ import com.models.*;
 import com.models.enums.Dice;
 import com.models.enums.ItemType;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,6 +14,8 @@ import static com.file.FileManager.getPerso;
 import static com.game.Utils.*;
 
 public class Games {
+
+    // mapPassed est maintenant stocké dans le héros pour la sauvegarde
 
     public static void startGame(Scanner sc) {
         System.out.println("==============================================");
@@ -31,7 +34,10 @@ public class Games {
         }else{
             perso = createPerso(sc);
         }
-        Board board = new Board(10, 10, 15, perso);
+        int width = 10 + 5 * perso.getMapPassed();
+        int height = 10 + 5 * perso.getMapPassed();
+        int nbrMonster = 15 + 5 * perso.getMapPassed();
+        Board board = new Board(width, height, nbrMonster, perso);
         gameLoop(sc, perso, board);
     }
 
@@ -52,9 +58,10 @@ public class Games {
     }
 
     public static void loopFight(Scanner sc, Hero perso, Monster enemy){
-        System.out.println("Vous rentrez dans un combat contre " + enemy.getName() +
-                "\nQui possède " + Math.max(enemy.getActualHp(), 0) + " points de vie\n");
+        System.out.println("Vous rentrez dans un combat contre " + enemy.getName());
         while(true){
+            System.out.printf("=========== Stats enemi ===========\nHp : %d/%d\nForce : %d   |   Endurance : %d\n",
+                    enemy.getActualHp(), enemy.getMaxHp(), enemy.getStrength(), enemy.getEndurance());
             int userChoice = askAction(sc);
             switch(userChoice){
                 case 1:
@@ -62,7 +69,7 @@ public class Games {
                     enemy.getDamage(damage);
                     System.out.printf("\nVous infligez %d dégats à %s", damage, enemy.getName());
                     System.out.printf("\nIl lui reste %d points de vie sur %d\n",
-                            (Math.max(enemy.getActualHp(), 0)), enemy.getMaxHp());
+                            Math.max(enemy.getActualHp(), 0), enemy.getMaxHp());
                     break;
                 case 2:
                     perso.usePotion();
@@ -92,8 +99,9 @@ public class Games {
             }
             int enemyDamage = enemy.attack();
             perso.getDamage(enemyDamage);
-            System.out.printf("\n%s vous a infligé %d dégats\nIl vous en reste %d / %d\n",
-                    enemy.getName(), enemyDamage, Math.max(perso.getActualHp(), 0), perso.getMaxHp());
+            System.out.printf("\n%s vous a infligé %d dégats mais vous vou protégez de %d grâce à votre armure" +
+                            "\nIl vous en reste %d / %d\n\n",
+                    enemy.getName(), enemyDamage, perso.getArmor(), Math.max(perso.getActualHp(), 0), perso.getMaxHp());
             if(perso.isDead()){
                 System.out.println("Vous avez perdu le combat NOOBY!");
                 return;
@@ -130,6 +138,16 @@ public class Games {
                 System.out.println("Game Over !");
                 System.out.println("Relancer le logiciel pour créer une nouvelle partie");
                 deleteSave(perso.getName());
+                return;
+            }
+            if(monster != null && monster.isBoss() && monster.isDead()){
+                perso.setMapPassed(perso.getMapPassed() + 1);
+                int width = 10 + 5 * perso.getMapPassed();
+                int height = 10 + 5 * perso.getMapPassed();
+                int nbrMonster = 15 + 5 * perso.getMapPassed();
+                System.out.println("Vous avez battu le boss de la map ! Félicitations !\n\nVous allez passer à la map suivante");
+                Board newBoard = new Board(width, height, nbrMonster, perso);
+                gameLoop(sc, perso, newBoard);
                 return;
             }
         }

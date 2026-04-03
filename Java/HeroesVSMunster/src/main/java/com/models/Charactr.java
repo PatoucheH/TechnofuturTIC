@@ -49,9 +49,9 @@ public abstract class Charactr implements Fighter {
     }
     public void setActualHp(int actualHp) {
         if(actualHp <= 0){
-            actualHp = 0;
+            this.actualHp = 0;
         }else{
-            this.actualHp = actualHp;
+            this.actualHp = Math.min(actualHp, getMaxHp());
         }
     }
     public void setEndurance(int defense) {
@@ -91,7 +91,7 @@ public abstract class Charactr implements Fighter {
 
     public void getDamage(int damage){
         if(damage < 0) throw new IllegalArgumentException("Les dommages doivent être positifs");
-        this.actualHp -= damage;
+        setActualHp(getActualHp() - damage);
     }
 
     public int attack(){
