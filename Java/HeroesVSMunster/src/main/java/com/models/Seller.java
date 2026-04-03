@@ -10,7 +10,7 @@ import java.util.Scanner;
 import static com.models.enums.ItemType.*;
 
 public class Seller {
-    private HashMap<ItemType, Integer> items = new HashMap<>();
+    private final HashMap<ItemType, Integer> items = new HashMap<>();
     private Position position;
 
     public Seller() {}
@@ -19,7 +19,7 @@ public class Seller {
             int cost = 0;
             switch (item) {
                 case LEATHER -> cost = 1;
-                case POTION -> cost = 5;
+                case POTION -> cost = 3;
                 case SWORD -> cost = 20;
                 case ARMOR -> cost = 30;
                 case HELMET -> cost = 16;

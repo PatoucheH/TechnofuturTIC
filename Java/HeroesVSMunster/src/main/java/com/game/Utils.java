@@ -147,16 +147,26 @@ public class Utils {
 
     public static void selectActionInInventory(Scanner sc, Hero perso) {
         while(true){
-            System.out.println("Que vouslez-vous faire ?\n1. Mettre un équipement\n2. Voir l'inventaire");
+            System.out.println("Que voulez-vous faire ?\n0. Quitter\n1. Mettre un équipement\n2. Voir l'inventaire");
             String userChocie = sc.nextLine();
             if (userChocie.equals("1")) {
                 System.out.println("Quel equipement voulez-vous équiper ? ");
                 perso.addEquipment(sc);
                 return;
-            } else if (userChocie.equals("2")) {
-
-            } else {
-                System.out.println("Entrez un numéro dans le menu");
+            }else if (userChocie.equals("2")) {
+                perso.openInventory();
+                System.out.println("Quelle item voulez-vous utilisez ? ");
+                String userItem = sc.nextLine();
+                if(userItem.isEmpty()) return;
+                ItemType userItemType = ItemType.valueOf(userItem.toUpperCase());
+                if(perso.getItems().containsKey((userItemType))){
+                    perso.useItem(userItemType);
+                    System.out.println(userItemType + " utilisé");
+                }else{
+                    System.out.println("Vous ne possédez pas cet item");
+                }
+            }else {
+                System.out.println("Entrez un numéro dans le menu ou 0 pour quitter ");
                 return;
             }
         }

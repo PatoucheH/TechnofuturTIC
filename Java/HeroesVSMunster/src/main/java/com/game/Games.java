@@ -58,8 +58,9 @@ public class Games {
     public static void loopFight(Scanner sc, Hero perso, Monster enemy){
         System.out.println("Vous rentrez dans un combat contre " + enemy.getName());
         while(true){
-            System.out.printf("=========== Stats enemi ===========\nHp : %d/%d\nForce : %d   |   Endurance : %d\n",
+            System.out.printf("\n=========== Stats enemi ===========\nHp : %d/%d\nForce : %d   |   Endurance : %d\n",
                     enemy.getActualHp(), enemy.getMaxHp(), enemy.getStrength(), enemy.getEndurance());
+            System.out.println("===================================");
             int userChoice = askAction(sc);
             switch(userChoice){
                 case 1:
@@ -70,7 +71,11 @@ public class Games {
                             Math.max(enemy.getActualHp(), 0), enemy.getMaxHp());
                     break;
                 case 2:
-                    perso.usePotion();
+                    boolean potionTaken = perso.usePotion();
+                    if(!potionTaken){
+                        System.out.println("Vous n'avez plus de potion ");
+                        continue;
+                    }
                     break;
                 case 3 :
                     System.out.println("Vous fuyez le combat LOPETTE ! ");
@@ -140,10 +145,11 @@ public class Games {
             }
             if(monster != null && monster.isBoss() && monster.isDead()){
                 perso.setMapPassed(perso.getMapPassed() + 1);
-                int width = 10 + 5 * perso.getMapPassed();
-                int height = 10 + 5 * perso.getMapPassed();
-                int nbrMonster = 15 + 5 * perso.getMapPassed();
+                int width = 10 + 8 * perso.getMapPassed();
+                int height = 10 + 4 * perso.getMapPassed();
+                int nbrMonster = 15 + 7 * perso.getMapPassed();
                 System.out.println("Vous avez battu le boss de la map ! Félicitations !\n\nVous allez passer à la map suivante");
+                sc.nextLine();
                 Board newBoard = new Board(width, height, nbrMonster, perso);
                 gameLoop(sc, perso, newBoard);
                 return;

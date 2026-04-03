@@ -29,7 +29,7 @@ public abstract class Hero extends Charactr {
         else if(endurance < 10) hp = endurance;
         else if(endurance < 15) hp = endurance + 1;
         else hp = endurance + 2;
-        super(name, hp, endurance, strength );
+        super(name, hp + 10, endurance, strength );
         setGold(gold);
         setXp(0);
         setLevel(1);
@@ -141,7 +141,7 @@ public abstract class Hero extends Charactr {
         return returnValue;
     }
 
-    public void usePotion() {
+    public boolean usePotion() {
         if (this.items.containsKey(ItemType.POTION)) {
             int quantity = this.items.get(ItemType.POTION);
             if (quantity > 1) {
@@ -149,9 +149,12 @@ public abstract class Hero extends Charactr {
             } else {
                 this.items.remove(ItemType.POTION);
             }
-            int heal = Dice.D10.roll();
+            int heal = Math.max(Dice.D20.roll(), 5);
             setActualHp(Math.min(getMaxHp(), getActualHp() + heal ));
             System.out.printf("Vous avez soigné %d et avez actuellement %d points de vie\n", heal, getActualHp());
+            return true;
+        }else {
+            return false;
         }
     }
 
@@ -198,7 +201,17 @@ public abstract class Hero extends Charactr {
     }
 
     public void openInventory(){
-        
+        for(Map.Entry<ItemType, Integer> entry : items.entrySet()){
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+    }
+
+    public void useItem(ItemType item){
+        if(item.equals(ItemType.POTION)){
+            usePotion();
+        }else{
+            System.out.println("Impossible d'utiliser cet item maintenant ");
+        }
     }
 
     @Override
