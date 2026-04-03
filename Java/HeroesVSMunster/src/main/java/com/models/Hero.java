@@ -134,7 +134,7 @@ public abstract class Hero extends Charactr {
         String returnValue =  "";
         this.xp += Math.max(xp, 0);
         returnValue = "\nVous avez gagné : " + xp + " d'xp";
-        if(this.xp > getLevel() * 10) {
+        if(this.xp >= getLevel() * 10) {
             this.xp -= getLevel() * 10;
             returnValue += addLevel();
         }

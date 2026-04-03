@@ -38,7 +38,7 @@ public abstract class Monster extends Charactr {
 
     public void calculateBonus(int persoLevel){
         setMaxHp(getMaxHp() + (D6.roll() * persoLevel - 1));
-        setActualHp(getMaxHp()); // monstre créé à pleine santé
+        setActualHp(getMaxHp());
         setEndurance(getEndurance() + (D4.roll() * persoLevel - 1));
         setStrength(getStrength() + (D4.roll() * persoLevel - 1));
     }

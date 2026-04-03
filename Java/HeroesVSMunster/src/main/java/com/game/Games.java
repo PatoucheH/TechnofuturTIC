@@ -15,8 +15,6 @@ import static com.game.Utils.*;
 
 public class Games {
 
-    // mapPassed est maintenant stocké dans le héros pour la sauvegarde
-
     public static void startGame(Scanner sc) {
         System.out.println("==============================================");
         System.out.println("Bienvenue dans Heroes VERSUS Monster\n\n\n");
@@ -125,7 +123,7 @@ public class Games {
                 perso.openEquipment();
                 selectActionInInventory(sc, perso);
             }
-            Monster monster = board.movePlayer(input);
+            Monster monster = board.movePlayer(sc, input);
             if (monster != null) {
                 System.out.println("Un " + monster.getName() + " apparaît !");
                 loopFight(sc, perso, monster);
