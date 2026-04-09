@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/repositories/AuthorRepository.java" value="e8ccfcde-7ac9-4af9-87a5-69ccd075a85a" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/repositories/BookRepository.java" value="e8ccfcde-7ac9-4af9-87a5-69ccd075a85a" />
-  </component>
-</project>

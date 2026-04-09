@@ -1,0 +1,23 @@
+{
+  "persistenceUnit": {
+    "name": "DemoJPA",
+    "provider": "org.hibernate.jpa.HibernatePersistenceProvider",
+    "transactionType": "RESOURCE_LOCAL",
+    "entities": [
+      "com.entities.Category",
+      "com.entities.Order",
+      "com.entities.OrderLine",
+      "com.entities.Product",
+      "com.entities.Stock",
+      "com.entities.User"
+    ],
+    "properties": {
+      "jakarta.persistence.jdbc.url": "jdbc:postgresql://localhost:5432/demojpa",
+      "jakarta.persistence.jdbc.user": "postgres",
+      "jakarta.persistence.jdbc.password": "Hugo099!",
+      "jakarta.persistence.jdbc.driver": "org.postgresql.Driver",
+      "hibernate.show_sql": "true",
+      "hibernate.hbm2ddl.auto": "create"
+    }
+  }
+}
