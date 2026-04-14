@@ -1,0 +1,20 @@
+{
+  "vault": {
+    "url": "http://localhost:8200/v1/app1/data/config",
+    "token": "myroot"
+  },
+  "database": {
+    "url": "${vault:database.url}",
+    "username": "${vault:database.username}",
+    "password": "${vault:database.password}",
+    "driverClassName": "org.postgresql.Driver",
+    "hibernate": {
+      "dialect": "org.hibernate.dialect.PostgreSQLDialect",
+      "showSql": true,
+      "formatSql": true,
+      "hbm2ddl": {
+        "auto": "create"
+      }
+    }
+  }
+}
