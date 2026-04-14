@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/bike")
 @RequiredArgsConstructor
@@ -16,17 +18,18 @@ public class BikeController {
 
     @GetMapping
     public String getAllBikes(
-            @RequestParam(value = "searchBrand", required = false) String search
-            , Model model
+            @RequestParam(required = false) String searchBrand,
+            @RequestParam(required = false) Integer minPower,
+            @RequestParam(required = false) Integer maxPower,
+            Model model
     ) {
-        if(search != null && !search.trim().isEmpty()){
-            model.addAttribute("bikes", bikeRepository.findAll().stream()
-                    .filter(b -> b.getBrand().toLowerCase().contains(search.toLowerCase()))
-                    .toList()
-            );
-        }else{
-            model.addAttribute("bikes", bikeRepository.findAll());
-        }
+        model.addAttribute("bikes",
+                bikeRepository.search(
+                        searchBrand != null ? searchBrand.toLowerCase() : null,
+                        minPower,
+                        maxPower
+                )
+        );
         return "/bike/allBikes";
     }
 

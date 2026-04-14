@@ -25,8 +25,18 @@
         </form>
         <form action="/bike" method="get">
             <p>Filter Bikes</p>
-            <label for="searchBrand"></label>
-            <input type="text" name="searchBrand" value="${search!''}" >
+            <label>Brand :</label>
+            <label>
+                <input type="text" name="searchBrand" value="${searchBrand!''}">
+            </label>
+            <label>Min Power :</label>
+            <label>
+                <input type="number" name="minPower" value="${minPower!''}">
+            </label>
+            <label>Max Power :</label>
+            <label>
+                <input type="number" name="maxPower" value="${maxPower!''}">
+            </label>
             <button type="submit">Filter</button>
         </form>
     </div>
