@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: spring_flavyan
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aeroport_spring
+    username: postgres
+    password: Hugo099!
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          auto: update
+    hibernate: update

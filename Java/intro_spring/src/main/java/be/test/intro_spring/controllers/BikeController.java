@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/bike")
 @RequiredArgsConstructor
@@ -23,7 +21,8 @@ public class BikeController {
             @RequestParam(required = false) Integer maxPower,
             Model model
     ) {
-        model.addAttribute("bikes",
+        model.addAttribute(
+                "bikes",
                 bikeRepository.search(
                         searchBrand != null ? searchBrand.toLowerCase() : null,
                         minPower,
