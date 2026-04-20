@@ -2,14 +2,14 @@ package be.spring_flavyan.entities.fiscal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Address {
     @Column(name = "addres_street")
     private String street;
@@ -21,4 +21,5 @@ public class Address {
     private String country;
     @Column(name = "address_state")
     private String state;
+
 }

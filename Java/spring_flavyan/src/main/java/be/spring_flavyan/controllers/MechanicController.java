@@ -1,8 +1,8 @@
 package be.spring_flavyan.controllers;
 
-import be.spring_flavyan.entities.fiscal.Fiscal;
-import be.spring_flavyan.entities.fiscal.Mechanic;
-import be.spring_flavyan.entities.fiscal.Pilot;
+import be.spring_flavyan.dtos.request.FiscalRequest;
+import be.spring_flavyan.dtos.request.MechanicRequest;
+import be.spring_flavyan.dtos.request.PilotRequest;
 import be.spring_flavyan.services.FiscalService;
 import be.spring_flavyan.services.MechanicService;
 import be.spring_flavyan.services.PilotService;
@@ -32,19 +32,21 @@ public class MechanicController {
         model.addAttribute("fiscals", fiscalService.findAll());
         model.addAttribute("pilots", pilotService.findAll());
         model.addAttribute("mechanics", mechanicService.findAll());
-        model.addAttribute("pilot", new Pilot());
-        model.addAttribute("fiscal", new Fiscal());
+        model.addAttribute("pilot", new PilotRequest());
+        model.addAttribute("fiscal", new FiscalRequest());
+        model.addAttribute("mechanic", new MechanicRequest());
         return "fiscals";
     }
 
     @PostMapping
-    public String addMechanic(@ModelAttribute @Valid Mechanic mechanic, BindingResult bindingResult, Model model) {
+    public String addMechanic(@ModelAttribute("mechanic") @Valid MechanicRequest mechanic, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("fiscals", fiscalService.findAllOnlyFiscal());
             model.addAttribute("pilots", pilotService.findAll());
             model.addAttribute("mechanics", mechanicService.findAll());
-            model.addAttribute("pilot", new Pilot());
-            model.addAttribute("fiscal", new Fiscal());
+            model.addAttribute("mechanic", mechanic);
+            model.addAttribute("pilot", new PilotRequest());
+            model.addAttribute("fiscal", new FiscalRequest());
             return "fiscals";
         }
         mechanicService.save(mechanic);
@@ -58,8 +60,14 @@ public class MechanicController {
     }
 
     @PostMapping("/{id}")
-    public String updateMechanic(@PathVariable Long id, @RequestParam String name) {
-        mechanicService.update(id, name);
+    public String updateMechanic(@PathVariable Long id,
+            @RequestParam String name,
+            @RequestParam(required = false) String street,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String zip,
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String state) {
+        mechanicService.update(id, name, street, city, zip, country, state);
         return "redirect:/fiscal";
     }
 }

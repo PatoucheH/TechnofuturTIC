@@ -1,4 +1,5 @@
 <#import "macros/layout.ftlh" as layout>
+<#import "macros/addressForm.ftlh" as address>
 <@layout.myLayout title="Fiscals">
     <h1 style="text-align: center">Fiscals / Pilots / Mechanics</h1>
     <div style="display:flex; flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px">
@@ -6,6 +7,7 @@
             <thead>
             <tr>
                 <td><h2>Fiscal Name</h2></td>
+                <td><h2>Address</h2></td>
                 <td><h2>Actions</h2></td>
             </tr>
             </thead>
@@ -14,6 +16,13 @@
                     <tr id="fiscal-view-${fiscal.id?c}">
                         <td>${fiscal.name!"Unknown Fiscal"}</td>
                         <td>
+                            <#if fiscal.address??>
+                                ${fiscal.address.toString()}
+                            <#else>
+                                Unknown address
+                            </#if>
+                        </td>
+                        <td>
                             <form action="/fiscal/${fiscal.id?c}/delete" method="POST" style="display:inline">
                                 <button type="submit">Delete</button>
                             </form>
@@ -21,9 +30,14 @@
                         </td>
                     </tr>
                     <tr id="fiscal-edit-${fiscal.id?c}" style="display:none">
-                        <td>
-                            <form action="/fiscal/${fiscal.id?c}" method="POST" style="display:flex; gap:8px; align-items:center">
-                                <input type="text" name="name" value="${fiscal.name!""}">
+                        <td colspan="3">
+                            <form action="/fiscal/${fiscal.id?c}" method="POST" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+                                <input type="text" name="name" value="${fiscal.name!""}" placeholder="Name">
+                                <input type="text" name="street" value="${(fiscal.address.street)!""}" placeholder="Street">
+                                <input type="text" name="city" value="${(fiscal.address.city)!""}" placeholder="City">
+                                <input type="text" name="zip" value="${(fiscal.address.zip)!""}" placeholder="ZIP">
+                                <input type="text" name="country" value="${(fiscal.address.country)!""}" placeholder="Country">
+                                <input type="text" name="state" value="${(fiscal.address.state)!""}" placeholder="State">
                                 <button type="submit">Save</button>
                                 <button type="button" onclick="cancelEdit('fiscal', ${fiscal.id?c})">Cancel</button>
                             </form>
@@ -37,6 +51,7 @@
                 <tr>
                     <td><h2>Pilot Name</h2></td>
                     <td><h2>Brevet number</h2></td>
+                    <td><h2>Address</h2></td>
                     <td><h2>Actions</h2></td>
                 </tr>
             </thead>
@@ -46,6 +61,13 @@
                         <td>${pilot.name!"Unknown Pilot"}</td>
                         <td>${pilot.brevetNumber!"Unknown brevet number"}</td>
                         <td>
+                            <#if pilot.address??>
+                                ${pilot.address.toString()}
+                            <#else>
+                                Unknown address
+                            </#if>
+                        </td>
+                        <td>
                             <form action="/pilot/${pilot.id?c}/delete" method="POST" style="display:inline">
                                 <button type="submit">Delete</button>
                             </form>
@@ -53,10 +75,15 @@
                         </td>
                     </tr>
                     <tr id="pilot-edit-${pilot.id?c}" style="display:none">
-                        <td>
-                            <form action="/pilot/${pilot.id?c}" method="POST" style="display:flex; gap:8px; align-items:center">
-                                <input type="text" name="name" value="${pilot.name!""}">
-                                <input type="text" name="brevetNumber" value="${pilot.brevetNumber!""}">
+                        <td colspan="4">
+                            <form action="/pilot/${pilot.id?c}" method="POST" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+                                <input type="text" name="name" value="${pilot.name!""}" placeholder="Name">
+                                <input type="text" name="brevetNumber" value="${pilot.brevetNumber!""}" placeholder="Brevet">
+                                <input type="text" name="street" value="${(pilot.address.street)!""}" placeholder="Street">
+                                <input type="text" name="city" value="${(pilot.address.city)!""}" placeholder="City">
+                                <input type="text" name="zip" value="${(pilot.address.zip)!""}" placeholder="ZIP">
+                                <input type="text" name="country" value="${(pilot.address.country)!""}" placeholder="Country">
+                                <input type="text" name="state" value="${(pilot.address.state)!""}" placeholder="State">
                                 <button type="submit">Save</button>
                                 <button type="button" onclick="cancelEdit('pilot', ${pilot.id?c})">Cancel</button>
                             </form>
@@ -69,6 +96,7 @@
             <thead>
                 <tr>
                     <td><h2>Mechanic Name</h2></td>
+                    <td><h2>Address</h2></td>
                     <td><h2>Actions</h2></td>
                 </tr>
             </thead>
@@ -77,6 +105,13 @@
                     <tr id="mechanic-view-${mechanic.id?c}">
                         <td>${mechanic.name!"Unknown mechanic"}</td>
                         <td>
+                            <#if mechanic.address??>
+                                ${mechanic.address.toString()}
+                            <#else>
+                                Unknown address
+                            </#if>
+                        </td>
+                        <td>
                             <form action="/mechanic/${mechanic.id?c}/delete" method="POST" style="display:inline">
                                 <button type="submit">Delete</button>
                             </form>
@@ -84,9 +119,14 @@
                         </td>
                     </tr>
                     <tr id="mechanic-edit-${mechanic.id?c}" style="display:none">
-                        <td>
-                            <form action="/mechanic/${mechanic.id?c}" method="POST" style="display:flex; gap:8px; align-items:center">
-                                <input type="text" name="name" value="${mechanic.name!""}">
+                        <td colspan="3">
+                            <form action="/mechanic/${mechanic.id?c}" method="POST" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+                                <input type="text" name="name" value="${mechanic.name!""}" placeholder="Name">
+                                <input type="text" name="street" value="${(mechanic.address.street)!""}" placeholder="Street">
+                                <input type="text" name="city" value="${(mechanic.address.city)!""}" placeholder="City">
+                                <input type="text" name="zip" value="${(mechanic.address.zip)!""}" placeholder="ZIP">
+                                <input type="text" name="country" value="${(mechanic.address.country)!""}" placeholder="Country">
+                                <input type="text" name="state" value="${(mechanic.address.state)!""}" placeholder="State">
                                 <button type="submit">Save</button>
                                 <button type="button" onclick="cancelEdit('mechanic', ${mechanic.id?c})">Cancel</button>
                             </form>
@@ -97,9 +137,7 @@
         </table>
     </div>
 
-    <br>
-    <br>
-    <br>
+    <br><br><br>
     <label for="choiceCreate">
         Choose :
         <select name="choiceCreate" id="choiceCreate" onchange="toggleForm()">
@@ -119,9 +157,7 @@
             <#if .vars['org.springframework.validation.BindingResult.pilot']??>
                 <#assign errors = .vars['org.springframework.validation.BindingResult.pilot']>
                 <#if errors.hasFieldErrors('name')>
-                    <div style="color:red;">
-                        ${errors.getFieldError('name').defaultMessage}
-                    </div>
+                    <div style="color:red;">${errors.getFieldError('name').defaultMessage}</div>
                 </#if>
             </#if>
             <label for="brevetNumber">
@@ -131,11 +167,13 @@
             <#if .vars['org.springframework.validation.BindingResult.pilot']??>
                 <#assign errors = .vars['org.springframework.validation.BindingResult.pilot']>
                 <#if errors.hasFieldErrors('brevetNumber')>
-                    <div style="color:red;">
-                        ${errors.getFieldError('brevetNumber').defaultMessage}
-                    </div>
+                    <div style="color:red;">${errors.getFieldError('brevetNumber').defaultMessage}</div>
                 </#if>
             </#if>
+            <@address.addressForm
+                errors=(.vars['org.springframework.validation.BindingResult.pilot'])!""
+                address=pilot.address>
+            </@address.addressForm>
             <button type="submit">ADD</button>
         </form>
     </div>
@@ -145,15 +183,17 @@
             <#if .vars['org.springframework.validation.BindingResult.mechanic']??>
                 <#assign errors = .vars['org.springframework.validation.BindingResult.mechanic']>
                 <#if errors.hasFieldErrors('name')>
-                    <div style="color:red;">
-                        ${errors.getFieldError('name').defaultMessage}
-                    </div>
+                    <div style="color:red;">${errors.getFieldError('name').defaultMessage}</div>
                 </#if>
             </#if>
             <label for="mechanicName">
                 Mechanic Name :
-                <input type="text" id="mechanicName" name="name" placeholder="REQUIRED" required>
+                <input type="text" id="mechanicName" name="name" placeholder="REQUIRED" required value="${mechanic.name!""}">
             </label>
+            <@address.addressForm
+                errors=(.vars['org.springframework.validation.BindingResult.mechanic'])!""
+                address=mechanic.address>
+            </@address.addressForm>
             <button type="submit">ADD</button>
         </form>
     </div>
@@ -163,48 +203,37 @@
             <#if .vars['org.springframework.validation.BindingResult.fiscal']??>
                 <#assign errors = .vars['org.springframework.validation.BindingResult.fiscal']>
                 <#if errors.hasFieldErrors('name')>
-                    <div style="color:red;">
-                        ${errors.getFieldError('name').defaultMessage}
-                    </div>
+                    <div style="color:red;">${errors.getFieldError('name').defaultMessage}</div>
                 </#if>
             </#if>
             <label for="fiscalName">
                 Fiscal Name :
-                <input type="text" id="fiscalName" name="name" placeholder="REQUIRED" required>
+                <input type="text" id="fiscalName" name="name" placeholder="REQUIRED" required value="${fiscal.name!""}">
             </label>
+            <@address.addressForm
+                errors=(.vars['org.springframework.validation.BindingResult.fiscal'])!""
+                address=fiscal.address>
+            </@address.addressForm>
             <button type="submit">ADD</button>
         </form>
     </div>
-</@layout.myLayout>
 
-<script>
-    function toggleForm() {
-        const choice = document.getElementById("choiceCreate").value;
-        const pilotForm = document.getElementById("pilotForm");
-        const mechanicForm = document.getElementById("mechanicForm");
-        const fiscalForm = document.getElementById("fiscalForm");
-        if (choice === "Pilot") {
-            pilotForm.style.display = "block";
-            mechanicForm.style.display = "none";
-            fiscalForm.style.display = "none";
-        } else if(choice === "Mechanic"){
-            pilotForm.style.display = "none";
-            mechanicForm.style.display = "block";
-            fiscalForm.style.display = "none";
-        }else{
-            pilotForm.style.display = "none";
-            mechanicForm.style.display = "none";
-            fiscalForm.style.display = "block";
+    <script>
+        function toggleForm() {
+            const choice = document.getElementById("choiceCreate").value;
+            document.getElementById("pilotForm").style.display    = choice === "Pilot"    ? "block" : "none";
+            document.getElementById("mechanicForm").style.display = choice === "Mechanic" ? "block" : "none";
+            document.getElementById("fiscalForm").style.display   = choice === "Fiscal"   ? "block" : "none";
         }
-    }
 
-    function startEdit(type, id) {
-        document.getElementById(type + '-view-' + id).style.display = 'none';
-        document.getElementById(type + '-edit-' + id).style.display = '';
-    }
+        function startEdit(type, id) {
+            document.getElementById(type + '-view-' + id).style.display = 'none';
+            document.getElementById(type + '-edit-' + id).style.display = '';
+        }
 
-    function cancelEdit(type, id) {
-        document.getElementById(type + '-edit-' + id).style.display = 'none';
-        document.getElementById(type + '-view-' + id).style.display = '';
-    }
-</script>
+        function cancelEdit(type, id) {
+            document.getElementById(type + '-edit-' + id).style.display = 'none';
+            document.getElementById(type + '-view-' + id).style.display = '';
+        }
+    </script>
+</@layout.myLayout>

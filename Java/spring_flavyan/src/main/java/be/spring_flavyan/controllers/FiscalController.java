@@ -1,7 +1,8 @@
 package be.spring_flavyan.controllers;
 
-import be.spring_flavyan.entities.fiscal.Fiscal;
-import be.spring_flavyan.entities.fiscal.Pilot;
+import be.spring_flavyan.dtos.request.FiscalRequest;
+import be.spring_flavyan.dtos.request.MechanicRequest;
+import be.spring_flavyan.dtos.request.PilotRequest;
 import be.spring_flavyan.services.FiscalService;
 import be.spring_flavyan.services.MechanicService;
 import be.spring_flavyan.services.PilotService;
@@ -27,22 +28,25 @@ public class FiscalController {
     private final MechanicService mechanicService;
 
     @GetMapping
-    public String getAllFiscals(Model model){
-        model.addAttribute("fiscals",fiscalService.findAllOnlyFiscal());
-        model.addAttribute("pilots",pilotService.findAll());
-        model.addAttribute("mechanics",mechanicService.findAll());
-        model.addAttribute("fiscal",  new Fiscal());
-        model.addAttribute("pilot", new Pilot());
+    public String getAllFiscals(Model model) {
+        model.addAttribute("fiscals", fiscalService.findAllOnlyFiscal());
+        model.addAttribute("pilots", pilotService.findAll());
+        model.addAttribute("mechanics", mechanicService.findAll());
+        model.addAttribute("fiscal", new FiscalRequest());
+        model.addAttribute("pilot", new PilotRequest());
+        model.addAttribute("mechanic", new MechanicRequest());
         return "fiscals";
     }
 
     @PostMapping
-    public String addFiscal(@ModelAttribute @Valid Fiscal fiscal, BindingResult bindingResult, Model model){
+    public String addFiscal(@ModelAttribute("fiscal") @Valid FiscalRequest fiscal, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("fiscals",  fiscalService.findAllOnlyFiscal());
+            model.addAttribute("fiscals", fiscalService.findAllOnlyFiscal());
             model.addAttribute("pilots", pilotService.findAll());
             model.addAttribute("mechanics", mechanicService.findAll());
-            model.addAttribute("fiscal",  new Fiscal());
+            model.addAttribute("fiscal", fiscal);
+            model.addAttribute("pilot", new PilotRequest());
+            model.addAttribute("mechanic", new MechanicRequest());
             return "fiscals";
         }
         fiscalService.save(fiscal);
@@ -56,8 +60,14 @@ public class FiscalController {
     }
 
     @PostMapping("/{id}")
-    public String updateFiscal(@PathVariable Long id, @RequestParam String name) {
-        fiscalService.update(id, name);
+    public String updateFiscal(@PathVariable Long id,
+            @RequestParam String name,
+            @RequestParam(required = false) String street,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String zip,
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String state) {
+        fiscalService.update(id, name, street, city, zip, country, state);
         return "redirect:/fiscal";
     }
 }

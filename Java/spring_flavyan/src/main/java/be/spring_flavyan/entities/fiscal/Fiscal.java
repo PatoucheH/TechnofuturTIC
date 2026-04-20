@@ -18,7 +18,7 @@ public class Fiscal extends BaseEntity<Long> {
     @NotBlank
     private String name;
     @Embedded
-    private Address address;
+    private Address address = new Address();
     private String phoneNumber;
 
     @OneToMany(mappedBy = "owner")

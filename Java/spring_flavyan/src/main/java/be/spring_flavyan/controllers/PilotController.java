@@ -1,7 +1,8 @@
 package be.spring_flavyan.controllers;
 
-import be.spring_flavyan.entities.fiscal.Fiscal;
-import be.spring_flavyan.entities.fiscal.Pilot;
+import be.spring_flavyan.dtos.request.FiscalRequest;
+import be.spring_flavyan.dtos.request.MechanicRequest;
+import be.spring_flavyan.dtos.request.PilotRequest;
 import be.spring_flavyan.services.FiscalService;
 import be.spring_flavyan.services.MechanicService;
 import be.spring_flavyan.services.PilotService;
@@ -30,19 +31,21 @@ public class PilotController {
         model.addAttribute("fiscals", fiscalService.findAll());
         model.addAttribute("pilots", pilotService.findAll());
         model.addAttribute("mechanics", mechanicService.findAll());
-        model.addAttribute("pilot", new Pilot());
-        model.addAttribute("fiscal", new Fiscal());
+        model.addAttribute("pilot", new PilotRequest());
+        model.addAttribute("fiscal", new FiscalRequest());
+        model.addAttribute("mechanic", new MechanicRequest());
         return "fiscals";
     }
 
     @PostMapping
-    public String addPilot(@ModelAttribute @Valid Pilot pilot, BindingResult bindingResult, Model model) {
+    public String addPilot(@ModelAttribute("pilot") @Valid PilotRequest pilot, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("fiscals", fiscalService.findAllOnlyFiscal());
             model.addAttribute("pilots", pilotService.findAll());
             model.addAttribute("mechanics", mechanicService.findAll());
             model.addAttribute("pilot", pilot);
-            model.addAttribute("fiscal", new Fiscal());
+            model.addAttribute("fiscal", new FiscalRequest());
+            model.addAttribute("mechanic", new MechanicRequest());
             return "fiscals";
         }
         pilotService.save(pilot);
@@ -56,8 +59,15 @@ public class PilotController {
     }
 
     @PostMapping("/{id}")
-    public String updatePilot(@PathVariable Long id, @RequestParam String name, @RequestParam String brevetNumber) {
-        pilotService.update(id, name, brevetNumber);
+    public String updatePilot(@PathVariable Long id,
+            @RequestParam String name,
+            @RequestParam String brevetNumber,
+            @RequestParam(required = false) String street,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String zip,
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String state) {
+        pilotService.update(id, name, brevetNumber, street, city, zip, country, state);
         return "redirect:/fiscal";
     }
 }

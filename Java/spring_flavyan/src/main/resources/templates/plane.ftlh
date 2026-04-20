@@ -102,12 +102,24 @@
             <button type="button" onclick="startEdit('planeType', ${planeType.id?c})">Edit</button>
             <hr>
         </div>
-        <div id="plane-edit-${planeType.id?c}" style="display:none">
+        <div id="planeType-edit-${planeType.id?c}" style="display:none">
             <form action="/planeType/${planeType.id?c}" method="POST" style="display:flex; gap:8px; align-items:center">
-                <input type="text" name="name" value="${planeType.name!""}">
-                <input type="text" name="constructorName" value="${planeType.constructorName!""}">
-                <input type="number" name="enginePower" value="${planeType.nbPlaces!""}">
-                <input type="number" name="nbPlace" value="${planeType.enginePower!""}">
+                <labell for="name">
+                    plane type name :
+                    <input type="text" name="name" value="${planeType.name!""}">
+                </labell>
+                <label for="constructorName">
+                    Constructor name :
+                    <input type="text" name="constructorName" value="${planeType.constructorName!""}">
+                </label>
+                <label for="enginePower">
+                    Engine power :
+                    <input type="number" name="enginePower" value="${(planeType.enginePower!0)?c}">
+                </label>
+                <label for="nbPlace">
+                    Number of place  :
+                    <input type="number" name="nbPlace" value="${(planeType.nbPlaces!0)?c}">
+                </label>
                 <button type="submit">Save</button>
                 <button type="button" onclick="cancelEdit('planeType', ${planeType.id?c})">Cancel</button>
             </form>
