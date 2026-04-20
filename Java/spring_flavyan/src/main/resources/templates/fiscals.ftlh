@@ -172,7 +172,7 @@
             </#if>
             <@address.addressForm
                 errors=(.vars['org.springframework.validation.BindingResult.pilot'])!""
-                address=pilot.address>
+                address=(pilot.address)!"">
             </@address.addressForm>
             <button type="submit">ADD</button>
         </form>
@@ -192,7 +192,7 @@
             </label>
             <@address.addressForm
                 errors=(.vars['org.springframework.validation.BindingResult.mechanic'])!""
-                address=mechanic.address>
+                address=(mechanic.address)!"">
             </@address.addressForm>
             <button type="submit">ADD</button>
         </form>
@@ -212,7 +212,7 @@
             </label>
             <@address.addressForm
                 errors=(.vars['org.springframework.validation.BindingResult.fiscal'])!""
-                address=fiscal.address>
+                address=(fiscal.address)!"">
             </@address.addressForm>
             <button type="submit">ADD</button>
         </form>
