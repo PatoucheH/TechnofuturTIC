@@ -1,19 +1,19 @@
-package be.firstapirest.dal.entities;
+package be.firstapirest.dl.entities;
 
-import be.firstapirest.dal.entities.base.BaseEntity;
-import be.firstapirest.dal.enums.OrderStatus;
+import be.firstapirest.dl.entities.base.BaseEntity;
+import be.firstapirest.dl.entities.base.BaseEntityUUID;
+import be.firstapirest.dl.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "t_order")
 @NoArgsConstructor @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false) @ToString
 @Data
-public class Order extends BaseEntity<Long> {
+public class Order extends BaseEntityUUID {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -1,16 +1,16 @@
-package be.firstapirest.dal.enums;
+package be.firstapirest.dl.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum TypeMove {
     IN("In"),
     OUT("Out");
 
-    private String value;
+    private final String value;
 
     TypeMove(String value) {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

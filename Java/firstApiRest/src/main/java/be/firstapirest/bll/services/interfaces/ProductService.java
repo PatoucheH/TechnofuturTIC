@@ -2,8 +2,7 @@ package be.firstapirest.bll.services.interfaces;
 
 
 import be.firstapirest.bll.services.interfaces.base.BaseCRUDService;
-import be.firstapirest.dal.entities.Product;
-import org.springframework.stereotype.Service;
+import be.firstapirest.dl.entities.Product;
 
 import java.util.List;
 

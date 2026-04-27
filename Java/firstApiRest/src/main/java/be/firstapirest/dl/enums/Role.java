@@ -1,5 +1,8 @@
-package be.firstapirest.dal.enums;
+package be.firstapirest.dl.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum Role {
     USER("User"),
     ADMIN("Admin");
@@ -10,7 +13,4 @@ public enum Role {
         this.role = role;
     }
 
-    public String getRole() {
-        return role;
-    }
 }

@@ -1,7 +1,7 @@
-package be.firstapirest.pl.controllers;
+package be.firstapirest.api.controllers;
 
 import be.firstapirest.bll.services.interfaces.ProductService;
-import be.firstapirest.pl.dtos.responses.ProductResponse;
+import be.firstapirest.api.dtos.responses.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

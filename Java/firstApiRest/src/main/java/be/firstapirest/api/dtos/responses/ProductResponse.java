@@ -1,18 +1,20 @@
-package be.firstapirest.pl.dtos.responses;
+package be.firstapirest.api.dtos.responses;
 
-import be.firstapirest.dal.entities.Product;
+import be.firstapirest.dl.entities.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 public class ProductResponse {
 
-    private final Long id;
+    private final UUID id;
     private final String name;
     private final String category;
     private final String description;
-    private final Double price;
+    private final Long price;
     private final Integer quantity;
 
     public static ProductResponse from(Product p) {

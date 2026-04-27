@@ -1,6 +1,6 @@
 package be.firstapirest.dal.repositories;
 
-import be.firstapirest.dal.entities.Product;
+import be.firstapirest.dl.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

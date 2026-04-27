@@ -2,7 +2,7 @@ package be.firstapirest.bll.services.implementations;
 
 import be.firstapirest.bll.services.implementations.base.AbstractCRUDImpl;
 import be.firstapirest.bll.services.interfaces.CategoryService;
-import be.firstapirest.dal.entities.Category;
+import be.firstapirest.dl.entities.Category;
 import be.firstapirest.dal.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 

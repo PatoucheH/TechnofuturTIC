@@ -1,7 +1,8 @@
-package be.firstapirest.dal.entities;
+package be.firstapirest.dl.entities;
 
-import be.firstapirest.dal.entities.base.BaseEntity;
-import be.firstapirest.dal.enums.Role;
+import be.firstapirest.dl.entities.base.BaseEntity;
+import be.firstapirest.dl.entities.base.BaseEntityUUID;
+import be.firstapirest.dl.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Table(name = "t_user")
 @NoArgsConstructor @AllArgsConstructor
 @Data
-public class User extends BaseEntity<Long> {
+public class User extends BaseEntityUUID {
 
     @Column(nullable = false, unique = true)
     private String email;

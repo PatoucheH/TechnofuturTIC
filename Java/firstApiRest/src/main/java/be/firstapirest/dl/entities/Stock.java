@@ -1,6 +1,6 @@
-package be.firstapirest.dal.entities;
+package be.firstapirest.dl.entities;
 
-import be.firstapirest.dal.entities.base.BaseEntity;
+import be.firstapirest.dl.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +18,6 @@ public class Stock extends BaseEntity<Long> {
     @Column(nullable = true)
     private Integer alertQuantity;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stock_id")
-    private List<StockMove> stockMove;
+
 
 }

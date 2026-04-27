@@ -2,7 +2,7 @@ package be.firstapirest.bll.services.implementations;
 
 import be.firstapirest.bll.services.implementations.base.AbstractCRUDImpl;
 import be.firstapirest.bll.services.interfaces.StockService;
-import be.firstapirest.dal.entities.Stock;
+import be.firstapirest.dl.entities.Stock;
 import be.firstapirest.dal.repositories.StockRepository;
 import org.springframework.stereotype.Service;
 

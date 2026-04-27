@@ -1,7 +1,7 @@
-package be.firstapirest.dal.entities;
+package be.firstapirest.dl.entities;
 
-import be.firstapirest.dal.entities.base.BaseEntity;
-import be.firstapirest.dal.enums.TypeMove;
+import be.firstapirest.dl.entities.base.BaseEntity;
+import be.firstapirest.dl.enums.TypeMove;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package be.firstapirest.dal.entities;
+package be.firstapirest.dl.entities;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;

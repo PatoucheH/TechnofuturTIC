@@ -1,5 +1,8 @@
-package be.firstapirest.dal.enums;
+package be.firstapirest.dl.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderStatus {
     PENDING("Pendding"),
     CONFIRMED("Confirmed"),
@@ -11,7 +14,4 @@ public enum OrderStatus {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
 }

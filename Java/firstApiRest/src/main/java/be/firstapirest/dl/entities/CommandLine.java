@@ -1,6 +1,6 @@
-package be.firstapirest.dal.entities;
+package be.firstapirest.dl.entities;
 
-import be.firstapirest.dal.entities.base.BaseEntity;
+import be.firstapirest.dl.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,9 +14,6 @@ public class CommandLine extends BaseEntity<Long> {
 
     @Column(nullable = false)
     private Integer quantity;
-
-    @Column(nullable = false)
-    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)

@@ -1,6 +1,7 @@
-package be.firstapirest.dal.entities;
+package be.firstapirest.dl.entities;
 
-import be.firstapirest.dal.entities.base.BaseEntity;
+import be.firstapirest.dl.entities.base.BaseEntity;
+import be.firstapirest.dl.entities.base.BaseEntityUUID;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @Getter
 @Setter
-public class Product extends BaseEntity<Long> {
+public class Product extends BaseEntityUUID {
 
     @Column(nullable = false, unique = true, length = 100)
     private String name;
@@ -24,9 +25,13 @@ public class Product extends BaseEntity<Long> {
     private String description;
 
     @Column(nullable = false)
-    private Double price;
+    private Long price;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Stock stock;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private List<StockMove> stockMove;
 
 }

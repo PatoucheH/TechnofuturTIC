@@ -1,16 +1,17 @@
-package be.firstapirest.dal.entities.base;
+package be.firstapirest.dl.entities.base;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @MappedSuperclass
 @Getter
-public class BaseEntity<T> {
+public class BaseEntityUUID {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private T id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private LocalDateTime createdAt;
 

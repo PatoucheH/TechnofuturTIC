@@ -1,6 +1,6 @@
 package be.firstapirest.dal.repositories;
 
-import be.firstapirest.dal.entities.Category;
+import be.firstapirest.dl.entities.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
